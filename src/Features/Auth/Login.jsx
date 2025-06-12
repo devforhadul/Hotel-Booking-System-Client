@@ -52,8 +52,8 @@ const Login = () => {
         ></Lottie>
       </div>
 
-      <div className="bg-white w-full md:max-w-md   md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center ">
-        <div className="w-full h-full">
+      <div className=" bg-white w-full md:max-w-md   md:w-1/2 xl:w-1/3  px-6 lg:px-16 xl:px-12 flex items-center ">
+        <div className="w-full">
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
             Log in to your account
           </h1>

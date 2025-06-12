@@ -2,13 +2,14 @@ import React from 'react';
 import Hero from '../Features/Home/Hero';
 import MapSection from '../Features/Home/MapSection';
 import RoomCard from '../Components/RoomCard';
+import RoomSection from '../Features/Booking/RoomSection';
 
 const Home = () => {
     return (
         <div>
             <Hero></Hero>
-            {/* <MapSection></MapSection> */}
-            <RoomCard></RoomCard>
+            <MapSection></MapSection>
+            <RoomSection></RoomSection>
         </div>
     );
 };

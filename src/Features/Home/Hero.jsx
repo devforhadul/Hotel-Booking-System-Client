@@ -3,9 +3,10 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import sliderImg1 from '../../assets/Images/hotel_bookig_img1.jpg'
-import sliderImg2 from '../../assets/Images/hotel_bookig_img2.jpg'
-import sliderImg3 from '../../assets/Images/hotel_bookig_img3.jpg'
+import sliderImg1 from "../../assets/Images/hotel_bookig_img1.jpg";
+import sliderImg2 from "../../assets/Images/hotel_bookig_img2.jpg";
+import sliderImg3 from "../../assets/Images/hotel_bookig_img3.jpg";
+import { Link } from "react-router";
 
 const Hero = () => {
   return (
@@ -26,9 +27,11 @@ const Hero = () => {
             <p className="text-lg mb-6 max-w-xl">
               Experience luxury, comfort, and convenience in one place.
             </p>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
-              Book Now
-            </button>
+            <Link to={'/rooms'}>
+              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                Book Now
+              </button>
+            </Link>
           </div>
         </SwiperSlide>
         <SwiperSlide>
