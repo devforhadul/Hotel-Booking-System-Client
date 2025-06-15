@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 // Assuming 'lucide-react' is available for icons. If not, you can replace with inline SVGs or other icon libraries.
 import {
   BedDouble,
@@ -10,13 +10,20 @@ import {
   Snowflake,
   User,
   CalendarDays,
+  
 } from "lucide-react";
 import { useLoaderData } from "react-router";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
+
 
 // Main App component
 const RoomDetails = () => {
-  const {data} = useLoaderData();
-  console.log(data);
+  const { data } = useLoaderData();
+  const {user} = use(AuthContext);
+
+  
 
   // Dummy room data for demonstration
   const room = {
@@ -43,11 +50,15 @@ const RoomDetails = () => {
     maxGuests: 2,
   };
 
+ 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [message, setMessage] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+
+  
 
   // Handle image navigation
   const goToNextImage = () => {
@@ -81,6 +92,31 @@ const RoomDetails = () => {
     setMessage(
       `Booking for ${room.name} from ${checkInDate} to ${checkOutDate} for ${numberOfGuests} guests confirmed! (This is a demo message)`
     );
+
+    const bookingData = {
+      roomId: data?._id,
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate, 
+      numberOfGuests: numberOfGuests,
+      userName: user?.displayName,
+      userEmail: user?.email,
+      userPhoto: user?.photoURL
+    }
+
+    
+
+    axios.post("http://localhost:3000/rooms", bookingData)
+    .then(response => {
+      console.log("Booking successful:", response.data);
+      toast.success("Booking confirmed successfully!");
+      setMessage("Booking confirmed successfully!");
+    })
+    .catch(error => { 
+      console.error("Error booking room:", error);
+      setMessage("Failed to confirm booking. Please try again later.");
+    });
+
+    setOpenModal(true);
     // Clear form
     setCheckInDate("");
     setCheckOutDate("");
@@ -90,16 +126,11 @@ const RoomDetails = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 font-sans">
       <div className="w-full max-w-6xl bg-white shadow-xl rounded-xl overflow-hidden p-6 md:p-8">
-        {/* Room Header */}
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
-          {data?.name}
-        </h1>
-
         {/* Image Gallery */}
         <div className="relative mb-8 rounded-lg overflow-hidden shadow-md">
           <img
-            src={room.images[currentImageIndex]}
-            alt={`${room.name} - View ${currentImageIndex + 1}`}
+            src={data?.images[currentImageIndex]}
+            alt={`${data?.name} - View ${currentImageIndex + 1}`}
             className="w-full h-96 object-cover rounded-lg"
             onError={(e) => {
               e.target.onerror = null;
@@ -139,6 +170,18 @@ const RoomDetails = () => {
           </div>
         </div>
 
+        {/* Room Header */}
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
+          {data?.name}
+        </h1>
+
+        {/* Rating this room*/}
+        <div className="mb-4">
+          <p className="px-4 py-1.5 rounded-xl border bg-[#ecf3fe] border-[#4073bf] inline-block">
+            {data?.reviewRating}/5.0
+          </p>
+        </div>
+
         {/* Room Details & Booking Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Column: Description & Amenities */}
@@ -149,23 +192,23 @@ const RoomDetails = () => {
                 About This Room
               </h2>
               <p className="text-gray-700 leading-relaxed">
-                {room.description}
+                {data?.description}
               </p>
             </section>
 
             {/* Amenities */}
             <section className="p-6 bg-green-50 rounded-lg shadow-inner">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                Amenities
+                Facilities
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {room.amenities.map((amenity, index) => (
+              <div className="">
+                {data.facilities.map((facilitie, index) => (
                   <div
                     key={index}
                     className="flex items-center space-x-3 text-gray-700"
                   >
-                    <span className="text-blue-500">{amenity.icon}</span>
-                    <span>{amenity.name}</span>
+                    {/* <span className="text-blue-500">{amenity.icon}</span> */}
+                    <li>{facilitie}</li>
                   </div>
                 ))}
               </div>
@@ -176,7 +219,7 @@ const RoomDetails = () => {
           <div className="md:col-span-1">
             <aside className="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-xl shadow-lg text-white">
               <h2 className="text-3xl font-extrabold mb-4 text-center">
-                ${room.pricePerNight}{" "}
+                ${data?.pricePerNight}{" "}
                 <span className="text-xl font-medium">/ night</span>
               </h2>
               <form onSubmit={handleBooking} className="space-y-4">
@@ -234,21 +277,25 @@ const RoomDetails = () => {
                       )
                     }
                     min="1"
-                    max={room.maxGuests}
+                    max={data?.roomCapacity || 1}
                     className="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
                     required
                   />
                   <p className="text-xs text-blue-100 mt-1">
-                    Max guests: {room.maxGuests}
+                    Max guests: {data?.roomCapacity}
                   </p>
                 </div>
                 <button
                   type="submit"
+                  
                   className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
                 >
                   Book Now
                 </button>
               </form>
+
+              {/* Modal */}
+              
               {message && (
                 <div className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded-md text-sm">
                   {message}
@@ -258,6 +305,7 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
+      <Toaster position="top-right"></Toaster>
     </div>
   );
 };
