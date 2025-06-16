@@ -1,8 +1,8 @@
 import React from 'react';
 import Hero from '../Features/Home/Hero';
 import MapSection from '../Features/Home/MapSection';
-import RoomCard from '../Components/RoomCard';
-import RoomSection from '../Features/Booking/RoomSection';
+import RoomSection from '../Features/Home/RoomSection';
+
 
 const Home = () => {
     return (

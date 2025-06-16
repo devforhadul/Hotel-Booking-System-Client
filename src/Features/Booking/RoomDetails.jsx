@@ -23,6 +23,8 @@ const RoomDetails = () => {
   const { data } = useLoaderData();
   const {user} = use(AuthContext);
 
+  console.log(data)
+
   
 
   // Dummy room data for demonstration

@@ -67,6 +67,8 @@ const MyBooking = () => {
     },
   ]);
 
+  
+
   // Handle Pay button click
   const handlePay = (bookingId) => {
     setBookings((prevBookings) =>
@@ -110,10 +112,10 @@ const MyBooking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 font-sans antialiased">
+    <div className=" bg-gray-100 p-4">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-10 text-center drop-shadow-lg">
-          <Hotel className="inline-block mr-3 text-blue-600" size={48} />
+        <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-10 text-center drop-shadow-lg">
+          {/* <Hotel className="inline-block mr-3 text-blue-600" size={48} /> */}
           My Bookings
         </h1>
 
