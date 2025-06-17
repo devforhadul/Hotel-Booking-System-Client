@@ -10,7 +10,6 @@ const RoomSection = () => {
     axios
       .get("http://localhost:3000/top-rated")
       .then((response) => {
-        console.log(response.data);
         setRooms(response.data);
       })
       .catch((error) => {
@@ -20,10 +19,11 @@ const RoomSection = () => {
 
   return (
     <div className="w-11/12 mx-auto py-10">
+      <h1 className="text-2xl font-bold mb-6">Top Rated Rooms</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {rooms.map((room, idx) => (
-          <Link  to={`/rooms/${room?._id}`}>
-            <div key={idx} className="rounded-lg overflow-hidden shadow-md bg-white">
+          <Link key={idx} to={`/rooms/${room?._id}`}>
+            <div className="rounded-lg overflow-hidden shadow-md bg-white">
               <img
                 src={room?.images[0]} // Replace with your own image
                 alt="Room"

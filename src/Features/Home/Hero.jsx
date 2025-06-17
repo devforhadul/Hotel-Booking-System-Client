@@ -15,6 +15,7 @@ const Hero = () => {
         modules={[Pagination]}
         className="mySwiper"
         pagination={{ clickable: true }}
+        loop={true}
       >
         <SwiperSlide>
           <img
@@ -27,7 +28,7 @@ const Hero = () => {
             <p className="text-lg mb-6 max-w-xl">
               Experience luxury, comfort, and convenience in one place.
             </p>
-            <Link to={'/rooms'}>
+            <Link to={"/rooms"}>
               <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
                 Book Now
               </button>
@@ -45,9 +46,11 @@ const Hero = () => {
             <p className="text-lg mb-6 max-w-xl">
               Experience luxury, comfort, and convenience in one place.
             </p>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
-              Book Now
-            </button>
+            <Link to={"/rooms"}>
+              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                Book Now
+              </button>
+            </Link>
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -61,9 +64,11 @@ const Hero = () => {
             <p className="text-lg mb-6 max-w-xl">
               Experience luxury, comfort, and convenience in one place.
             </p>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
-              Book Now
-            </button>
+            <Link to={"/rooms"}>
+              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                Book Now
+              </button>
+            </Link>
           </div>
         </SwiperSlide>
       </Swiper>

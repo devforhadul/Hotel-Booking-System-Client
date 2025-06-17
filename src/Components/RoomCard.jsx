@@ -1,3 +1,4 @@
+import { Star } from "lucide-react";
 import React from "react";
 import { FaUsers, FaRulerCombined, FaMoneyBillWave } from "react-icons/fa";
 import { Link } from "react-router";
@@ -13,25 +14,21 @@ const RoomCard = ({ room }) => {
         />
         <div className="p-4">
           <h2 className="text-lg font-semibold">{room?.name}</h2>
-          <p className="text-sm text-gray-500 mb-1">{room?.location}</p>
-          <div className="flex items-center text-yellow-500 mb-2 text-sm">
-            {/* {"★".repeat(5)}{" "} */}
-            <span className="text-gray-500">{room?.hotelType} Hotel</span>
-          </div>
-
+          <p className="text-sm text-gray-500 mb-3">{room?.location}</p>
+          
           <div className="grid grid-cols-3 gap-2 text-center text-sm text-gray-700 border-t border-b py-3">
             <div>
-              <FaUsers className="mx-auto mb-1" />
-              <p>PAX</p>
+              <FaUsers className="mx-auto mb-1" size={20}/>
+              <p>Person</p>
               <p className="font-semibold">{room?.roomCapacity}</p>
             </div>
             <div>
-              <FaRulerCombined className="mx-auto mb-1" />
-              <p>AREA</p>
-              <p className="font-semibold">1250 sqf</p>
+              <Star className="mx-auto mb-1" size={20} />
+              <p>Hotel Type</p>
+              <p className="font-semibold">{room?.hotelType}</p>
             </div>
             <div>
-              <FaMoneyBillWave className="mx-auto mb-1" />
+              <FaMoneyBillWave className="mx-auto mb-1" size={20}/>
               <p>PRICE</p>
               <p className="font-semibold">${room?.pricePerNight}</p>
             </div>

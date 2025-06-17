@@ -23,7 +23,6 @@ const RoomDetails = () => {
   const { data } = useLoaderData();
   const {user} = use(AuthContext);
 
-  console.log(data)
 
   
 
@@ -111,7 +110,7 @@ const RoomDetails = () => {
     .then(response => {
       console.log("Booking successful:", response.data);
       toast.success("Booking confirmed successfully!");
-      setMessage("Booking confirmed successfully!");
+      
     })
     .catch(error => { 
       console.error("Error booking room:", error);
@@ -126,7 +125,7 @@ const RoomDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 font-sans">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 ">
       <div className="w-full max-w-6xl bg-white shadow-xl rounded-xl overflow-hidden p-6 md:p-8">
         {/* Image Gallery */}
         <div className="relative mb-8 rounded-lg overflow-hidden shadow-md">

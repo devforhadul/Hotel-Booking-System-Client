@@ -36,7 +36,7 @@ const Login = () => {
         const user = result.user;
         toast.success("Google Sign in Successfully");
       })
-      .then((error) => {
+      .catch((error) => {
         const errorMessage = error.message;
       });
   };
@@ -65,7 +65,7 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                id="email"
+                
                 name="email"
                 placeholder="Enter Email Address"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"

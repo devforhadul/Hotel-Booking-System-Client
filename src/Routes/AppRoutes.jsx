@@ -37,6 +37,7 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
+        loader: ()=> axios.get("http://localhost:3000/rooms"),
       },
       {
         path: "login",
