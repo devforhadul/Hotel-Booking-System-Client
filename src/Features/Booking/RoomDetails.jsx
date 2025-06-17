@@ -10,21 +10,18 @@ import {
   Snowflake,
   User,
   CalendarDays,
-  
+  CircleX,
 } from "lucide-react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
-
+import ReviewCard from "../../Components/ReviewCard";
 
 // Main App component
 const RoomDetails = () => {
   const { data } = useLoaderData();
-  const {user} = use(AuthContext);
-
-
-  
+  const { user } = use(AuthContext);
 
   // Dummy room data for demonstration
   const room = {
@@ -51,16 +48,13 @@ const RoomDetails = () => {
     maxGuests: 2,
   };
 
- 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [message, setMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
-
-  
-
+  const navigate = useNavigate();
   // Handle image navigation
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % room.images.length);
@@ -90,34 +84,37 @@ const RoomDetails = () => {
       return;
     }
     // In a real application, you would send this data to a backend API
-    setMessage(
-      `Booking for ${room.name} from ${checkInDate} to ${checkOutDate} for ${numberOfGuests} guests confirmed! (This is a demo message)`
-    );
+    // setMessage(
+    //   `Booking for ${room.name} from ${checkInDate} to ${checkOutDate} for ${numberOfGuests} guests confirmed! (This is a demo message)`
+    // );
 
+    setOpenModal(true);
+  };
+
+  // Handle booking confirmation
+  const handleConfirmBooking = () => {
     const bookingData = {
       roomId: data?._id,
       checkInDate: checkInDate,
-      checkOutDate: checkOutDate, 
+      checkOutDate: checkOutDate,
       numberOfGuests: numberOfGuests,
       userName: user?.displayName,
       userEmail: user?.email,
-      userPhoto: user?.photoURL
-    }
+      userPhoto: user?.photoURL,
+    };
 
-    
+    axios
+      .post("http://localhost:3000/rooms", bookingData)
+      .then((response) => {
+        console.log("Booking successful:", response.data);
+        toast.success("Booking confirmed successfully!");
+        navigate("/my-booking");
+      })
+      .catch((error) => {
+        console.error("Error booking room:", error);
+        setMessage("Failed to confirm booking. Please try again later.");
+      });
 
-    axios.post("http://localhost:3000/rooms", bookingData)
-    .then(response => {
-      console.log("Booking successful:", response.data);
-      toast.success("Booking confirmed successfully!");
-      
-    })
-    .catch(error => { 
-      console.error("Error booking room:", error);
-      setMessage("Failed to confirm booking. Please try again later.");
-    });
-
-    setOpenModal(true);
     // Clear form
     setCheckInDate("");
     setCheckOutDate("");
@@ -126,7 +123,7 @@ const RoomDetails = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 ">
-      <div className="w-full max-w-6xl bg-white shadow-xl rounded-xl overflow-hidden p-6 md:p-8">
+      <div className="w-11/12 mx-auto bg-white shadow-xl rounded-xl overflow-hidden p-6 md:p-8">
         {/* Image Gallery */}
         <div className="relative mb-8 rounded-lg overflow-hidden shadow-md">
           <img
@@ -197,7 +194,7 @@ const RoomDetails = () => {
               </p>
             </section>
 
-            {/* Amenities */}
+            {/* Fecilites */}
             <section className="p-6 bg-green-50 rounded-lg shadow-inner">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
                 Facilities
@@ -288,15 +285,70 @@ const RoomDetails = () => {
                 </div>
                 <button
                   type="submit"
-                  
+                  // onClick={() => setOpenModal(true)}
                   className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
                 >
                   Book Now
                 </button>
               </form>
 
-              {/* Modal */}
-              
+              {/* modal */}
+              {openModal && (
+                <dialog id="my_modal_1" className="modal modal-open">
+                  <div className="modal-box text-black">
+                    {" "}
+                    {/* text-black যুক্ত করা হলো */}
+                    <div>
+                      <h3 className="font-bold text-xl mb-4 text-center">
+                        Booking Summary
+                      </h3>
+                      <ul className="text-sm space-y-2">
+                        <li>
+                          <strong>Room:</strong> {data?.name}
+                        </li>
+                        <li>
+                          <strong>Name:</strong> {user?.displayName}
+                        </li>
+                        <li>
+                          <strong>Email:</strong> {user?.email}
+                        </li>
+                        <li>
+                          <strong>Guests:</strong> {numberOfGuests}
+                        </li>
+                        <li>
+                          <strong>Check-in:</strong> {checkInDate}
+                        </li>
+                        <li>
+                          <strong>Check-out:</strong> {checkOutDate}
+                        </li>
+                        <li>
+                          <strong>Price/night:</strong> ${data?.pricePerNight}
+                        </li>
+                        {/* <li>
+                          <strong>Total:</strong> ${bookingSummary.totalCost}
+                        </li> */}
+                      </ul>
+                      <button
+                        onClick={handleConfirmBooking}
+                        className="w-full mt-4 cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                      >
+                        Confirm Booking
+                      </button>
+                    </div>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        <button
+                          onClick={() => setOpenModal(false)}
+                          className="btn"
+                        >
+                          <CircleX />
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
+              )}
+
               {message && (
                 <div className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded-md text-sm">
                   {message}
@@ -306,6 +358,19 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
+      {/* Review secion */}
+      <div className="w-11/12 mx-auto bg-white shadow-xl rounded-xl overflow-hidden p-6 mt-8">
+        {data?.reviews?.length > 0 ? (
+          data?.reviews.map((review, idx) => (
+            <ReviewCard key={idx} review={review}></ReviewCard>
+          ))
+        ) : (
+          <div className="text-center text-gray-500">
+            <p>No reviews yet. Be the first to review this room!</p>
+          </div>
+        )}
+      </div>
+
       <Toaster position="top-right"></Toaster>
     </div>
   );

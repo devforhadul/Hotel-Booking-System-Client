@@ -7,13 +7,15 @@ import {
   DatabaseBackup,
   DollarSign,
   Hotel,
+  Star,
   XCircle,
 } from "lucide-react";
 import React, { use, useEffect, useState } from "react";
-import { AuthContext } from "../Context/AuthContext";
 import { useLoaderData } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
+import { MdRateReview } from "react-icons/md";
+import { AuthContext } from "../context/AuthContext";
 
 const MyBooking = () => {
   // Mock booking data
@@ -21,6 +23,15 @@ const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
   const { data } = useLoaderData();
   const [openModal, setOpenModal] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hovered, setHovered] = useState(0);
+  const [textReview, setTextReview] = useState("");
+  const [reviewId, setReviewId] = useState("");
+
+  console.log(reviewId)
 
   const bookedRooms = bookings?.map((booking) => {
     const room = data?.find((room) => room._id == booking.roomId);
@@ -75,10 +86,45 @@ const MyBooking = () => {
     });
   };
 
+  // Handle Review submission
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    const reviews = {
+      name: user?.displayName || "Anonymous",
+      email: user?.email,
+      photo:
+        user?.photoURL || "https://placehold.co/50x50/CCCCCC/666666?text=User",
+      reviewRating: rating,
+      description: textReview,
+    };
+
+    axios
+      .patch(`http://localhost:3000/rooms/${reviewId}/review`, reviews)
+      .then((res) => {
+        console.log(res.data)
+        setReviewModal(false);
+        toast.success("Review submitted successfully!");
+        setRating(0);
+      })
+      .catch((error) => {
+        console.error("Error submitting review:", error);
+        toast.error("Failed to submit review. Please try again.");
+        setReviewModal(false);
+        setRating(0);
+      });
+  };
+
   // Handle Update button click
   const handleUpdate = (bookingId) => {
     setOpenModal(true);
-    console.log("update", bookingId);
+
+    const updateDate = {
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate,
+    };
+    console.log(updateDate);
+
+    //axios.put(`http://localhost:3000/booked/update/${bookingId}`)
   };
 
   // State for status messages (replacing alert)
@@ -206,6 +252,17 @@ const MyBooking = () => {
                       Update Date
                       <DatabaseBackup />
                     </div>
+                    {/* Review button */}
+                    <div
+                      onClick={() => {
+                        setReviewId(booking.room._id);
+                        setReviewModal(true);
+                      }}
+                      className="flex items-center text-gray-500 gap-2"
+                    >
+                      Give Review
+                      <MdRateReview />
+                    </div>
                   </div>
 
                   <div className="flex space-x-4">
@@ -220,7 +277,7 @@ const MyBooking = () => {
 
                     <button
                       onClick={() => handleCancel(booking.booked._id)}
-                      className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center`}
+                      className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
                     >
                       <XCircle className="mr-2" size={20} /> Cancel
                     </button>
@@ -238,6 +295,8 @@ const MyBooking = () => {
           </div>
         )}
       </div>
+
+      {/* Mofal for Update  */}
       {openModal && (
         <>
           {/* Modal for update */}
@@ -245,7 +304,7 @@ const MyBooking = () => {
             <div className="modal-box">
               <h3 className="font-bold text-lg">Hello!</h3>
               <div>
-                <form  className="space-y-4">
+                <form className="space-y-4">
                   <div>
                     <label
                       htmlFor="check-in"
@@ -257,9 +316,9 @@ const MyBooking = () => {
                     <input
                       type="date"
                       id="check-in"
-                      // value={checkInDate}
-                      // onChange={(e) => setCheckInDate(e.target.value)}
-                      // min={new Date().toISOString().split("T")[0]} 
+                      value={checkInDate}
+                      onChange={(e) => setCheckInDate(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]}
                       className="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
                       required
                     />
@@ -275,16 +334,16 @@ const MyBooking = () => {
                     <input
                       type="date"
                       id="check-out"
-                      // value={checkOutDate}
-                      // onChange={(e) => setCheckOutDate(e.target.value)}
-                      // min={
-                      //   checkInDate || new Date().toISOString().split("T")[0]
-                      // } 
+                      value={checkOutDate}
+                      onChange={(e) => setCheckOutDate(e.target.value)}
+                      min={
+                        checkInDate || new Date().toISOString().split("T")[0]
+                      }
                       className="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
                       required
                     />
                   </div>
-                  
+
                   <button
                     type="submit"
                     className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
@@ -297,6 +356,74 @@ const MyBooking = () => {
                 <form method="dialog">
                   {/* if there is a button in form, it will close the modal */}
                   <button onClick={() => setOpenModal(false)} className="btn">
+                    Close
+                  </button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </>
+      )}
+
+      {/* Mofal for Review  */}
+      {reviewModal && (
+        <>
+          {/* Modal for review */}
+          <dialog id="my_modal_1" className="modal modal-open">
+            <div className="modal-box">
+              <div>
+                <form onSubmit={handleSubmitReview} className="space-y-4">
+                  <div>
+                    <label
+                      htmlFor="review"
+                      className="block text-sm font-semibold mb-2"
+                    >
+                      <MdRateReview size={16} className="inline-block mr-2" />{" "}
+                      Write a Review
+                    </label>
+                    <textarea
+                      id="review"
+                      rows="4"
+                      placeholder="Write your review here..."
+                      className="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none ring-2 ring-blue-200 transition-colors duration-200"
+                      required
+                      onChange={(e) => setTextReview(e.target.value)}
+                    ></textarea>
+                  </div>
+
+                  {/* star rating */}
+                  <div className="flex space-x-2 text-yellow-400 text-3xl">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        type="button"
+                        key={star}
+                        onClick={() => setRating(star)}
+                        onMouseEnter={() => setHovered(star)}
+                        onMouseLeave={() => setHovered(0)}
+                        className="transition transform hover:scale-110"
+                      >
+                        <Star
+                          fill={
+                            (hovered || rating) >= star ? "#facc15" : "none"
+                          }
+                          stroke="#facc15"
+                        />
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  >
+                    Submit Review
+                  </button>
+                </form>
+              </div>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button onClick={() => setReviewModal(false)} className="btn">
                     Close
                   </button>
                 </form>
