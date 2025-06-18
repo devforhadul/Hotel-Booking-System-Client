@@ -1,16 +1,22 @@
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import L from "leaflet";
 
 const MapSection = () => {
-  const locations = [
-    { id: 1, name: "Dhaka", position: [23.8103, 90.4125] },
-    { id: 2, name: "Chittagong", position: [22.3569, 91.7832] },
-    { id: 3, name: "Rajshahi", position: [24.3636, 88.6241] },
-    { id: 4, name: "Sylhet", position: [24.8949, 91.8687] },
-  ];
+  let DefaultIcon = L.icon({
+    iconUrl,
+    shadowUrl: iconShadow,
+  });
+  L.Marker.prototype.options.icon = DefaultIcon;
 
-  const centerPosition = [23.8103, 90.4125]; // Default map center
+  const locations = [
+    { id: 1, name: "Dhaka", lat: 23.8103, lng: 90.4125 },
+    { id: 2, name: "Chittagong", lat: 22.3569, lng: 91.7832 },
+    { id: 3, name: "Sylhet", lat: 24.8949, lng: 91.8687 },
+  ];
 
   return (
     <div className="">
@@ -19,18 +25,17 @@ const MapSection = () => {
           <h1 className="text-2xl font-bold mb-6">Hotel Map</h1>
         </div>
         <MapContainer
-          center={centerPosition} // Dhaka coordinates
-          zoom={13}
-          scrollWheelZoom={false}
-          className="h-[400px]  rounded-lg"
+          center={[23.8103, 90.4125]}
+          zoom={7}
+          style={{ height: "500px", width: "100%" }}
         >
           <TileLayer
-            attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
           />
-          {locations.map((location) => (
-            <Marker key={location.id} position={location.position}>
-              <Popup>{location.name}</Popup>
+          {locations.map((loc) => (
+            <Marker key={loc.id} position={[loc.lat, loc.lng]}>
+              <Popup>{loc.name}</Popup>
             </Marker>
           ))}
         </MapContainer>

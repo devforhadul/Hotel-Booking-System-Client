@@ -1,16 +1,15 @@
 import Lottie from "lottie-react";
 import React, { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import loginAnim from "../../assets/Animation/login_animation.json";
-import { AuthContext } from "../../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
+import { AuthContext } from "../../context/AuthContext";
 
 const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { createAccount } = use(AuthContext);
-
-
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -33,6 +32,7 @@ const Register = () => {
         displayName: name,
         photoURL: photoUrl,
       });
+      navigate('/');
       toast.success("Account create successfully.");
     } catch (error) {
       console.log(error.message);
@@ -40,10 +40,10 @@ const Register = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="flex justify-center  px-6 my-12">
+    <div className="">
+      <div className="flex justify-center items-center my-8">
         {/* Row */}
-        <div className="w-full  flex gap-5">
+        <div className="flex ">
           {/* Col */}
           <div className="bg-white/0  bg-cover rounded-l-lg">
             <Lottie
@@ -54,7 +54,7 @@ const Register = () => {
           </div>
           {/* Col */}
           <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-            <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
+            <h3 className="pt-4 text-2xl font-bold text-center">Create an Account!</h3>
             <form
               onSubmit={handleSignup}
               className="px-8 pt-6 pb-8 mb-4 bg-white rounded"

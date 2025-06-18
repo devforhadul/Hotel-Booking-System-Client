@@ -30,8 +30,7 @@ const MyBooking = () => {
   const [hovered, setHovered] = useState(0);
   const [textReview, setTextReview] = useState("");
   const [reviewId, setReviewId] = useState("");
-
-  console.log(reviewId)
+  const [updateId, setUpdateId] = useState("");
 
   const bookedRooms = bookings?.map((booking) => {
     const room = data?.find((room) => room._id == booking.roomId);
@@ -54,7 +53,12 @@ const MyBooking = () => {
   }, [user]);
 
   // Handle Cancel button click
-  const handleCancel = (bookingId) => {
+  const handleCancel = (bookingId, roomId) => {
+
+    const availability = {
+      isAvailable: true
+    };
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -72,6 +76,19 @@ const MyBooking = () => {
               setBookings((prev) =>
                 prev.filter((booking) => booking._id !== bookingId)
               );
+              // after cancla availability is true
+              axios
+                .patch(
+                  `http://localhost:3000/rooms/cancel/${roomId}`,
+                  availability
+                )
+                .then((res) => {
+                  console.log("Room availability updated:", res.data);
+                })
+                .catch((error) => {
+                  console.error("Error updating room availability:", error);
+                });
+
               Swal.fire({
                 title: "Deleted!",
                 text: "Your Booking has been deleted.",
@@ -101,7 +118,7 @@ const MyBooking = () => {
     axios
       .patch(`http://localhost:3000/rooms/${reviewId}/review`, reviews)
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setReviewModal(false);
         toast.success("Review submitted successfully!");
         setRating(0);
@@ -115,16 +132,40 @@ const MyBooking = () => {
   };
 
   // Handle Update button click
-  const handleUpdate = (bookingId) => {
-    setOpenModal(true);
-
+  const handleUpdateDate = (e) => {
+    e.preventDefault();
     const updateDate = {
       checkInDate: checkInDate,
       checkOutDate: checkOutDate,
     };
-    console.log(updateDate);
 
-    //axios.put(`http://localhost:3000/booked/update/${bookingId}`)
+    axios
+      .patch(`http://localhost:3000/booked/update/${updateId}`, updateDate)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          //  Update UI instantly
+          setBookings((prev) =>
+            prev.map((booking) =>
+              booking._id === updateId
+                ? { ...booking, checkInDate, checkOutDate }
+                : booking
+            )
+          );
+          setOpenModal(false);
+          toast.success("Booking updated successfully!");
+          setCheckInDate("");
+          setCheckOutDate("");
+          setUpdateId("");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating booking:", error);
+        toast.error("Failed to update booking. Please try again.");
+        setOpenModal(false);
+        setCheckInDate("");
+        setCheckOutDate("");
+        setUpdateId("");
+      });
   };
 
   // State for status messages (replacing alert)
@@ -246,7 +287,9 @@ const MyBooking = () => {
                       {booking.status}
                     </span> */}
                     <div
-                      onClick={() => handleUpdate(booking.booked._id)}
+                      onClick={() => {
+                        setUpdateId(booking.booked._id), setOpenModal(true);
+                      }}
                       className="flex items-center text-gray-500 gap-2"
                     >
                       Update Date
@@ -276,7 +319,7 @@ const MyBooking = () => {
                     )} */}
 
                     <button
-                      onClick={() => handleCancel(booking.booked._id)}
+                      onClick={() => handleCancel(booking.booked._id,  booking.room._id)}
                       className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
                     >
                       <XCircle className="mr-2" size={20} /> Cancel
@@ -302,9 +345,8 @@ const MyBooking = () => {
           {/* Modal for update */}
           <dialog id="my_modal_1" className="modal modal-open">
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
               <div>
-                <form className="space-y-4">
+                <form onSubmit={handleUpdateDate} className="space-y-4">
                   <div>
                     <label
                       htmlFor="check-in"

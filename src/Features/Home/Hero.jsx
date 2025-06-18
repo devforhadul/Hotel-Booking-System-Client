@@ -1,8 +1,9 @@
 import React from "react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import 'swiper/css/autoplay'
 import sliderImg1 from "../../assets/Images/hotel_bookig_img1.jpg";
 import sliderImg2 from "../../assets/Images/hotel_bookig_img2.jpg";
 import sliderImg3 from "../../assets/Images/hotel_bookig_img3.jpg";
@@ -16,6 +17,13 @@ const Hero = () => {
         className="mySwiper"
         pagination={{ clickable: true }}
         loop={true}
+        autoplay={{
+          delay: 2500, // 2.5 seconds per slide
+          disableOnInteraction: false, // auto slide continues after manual swipe
+        }}
+        modules={[Autoplay]}
+        spaceBetween={30}
+        slidesPerView={1}
       >
         <SwiperSlide>
           <img

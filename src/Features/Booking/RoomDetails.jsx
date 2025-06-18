@@ -22,7 +22,6 @@ import ReviewCard from "../../Components/ReviewCard";
 const RoomDetails = () => {
   const { data } = useLoaderData();
   const { user } = use(AuthContext);
-
   // Dummy room data for demonstration
   const room = {
     id: "room-101",
@@ -68,6 +67,12 @@ const RoomDetails = () => {
 
   // Handle booking submission
   const handleBooking = (e) => {
+
+    if(!user){
+      toast.error("Please login to book a room.");
+      return navigate('/login')
+    }
+
     e.preventDefault();
     if (!checkInDate || !checkOutDate || numberOfGuests <= 0) {
       setMessage("Please fill in all booking details.");
@@ -103,12 +108,28 @@ const RoomDetails = () => {
       userPhoto: user?.photoURL,
     };
 
+    const availability = {
+      isAvailable: false,
+    };
+
     axios
       .post("http://localhost:3000/rooms", bookingData)
       .then((response) => {
         console.log("Booking successful:", response.data);
         toast.success("Booking confirmed successfully!");
         navigate("/my-booking");
+        // after confirming booking avaiolability false for not available room
+        axios
+          .patch(
+            `http://localhost:3000/rooms/booked/${data?._id}`,
+            availability
+          )
+          .then((res) => {
+            console.log("Room availability updated:", res.data);
+          })
+          .catch((error) => {
+            console.error("Error updating room availability:", error);
+          });
       })
       .catch((error) => {
         console.error("Error booking room:", error);
@@ -360,6 +381,7 @@ const RoomDetails = () => {
       </div>
       {/* Review secion */}
       <div className="w-11/12 mx-auto bg-white shadow-xl rounded-xl overflow-hidden p-6 mt-8">
+        <h3 className="text-2xl font-bold mb-3">Reviews</h3>
         {data?.reviews?.length > 0 ? (
           data?.reviews.map((review, idx) => (
             <ReviewCard key={idx} review={review}></ReviewCard>

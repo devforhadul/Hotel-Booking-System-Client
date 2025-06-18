@@ -3,14 +3,16 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Auth } from "/src/Firebase/firebase.init";
 import toast, { Toaster } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import loginAnim from "../../assets/Animation/login_animation.json";
 import Lottie from "lottie-react";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
   const { loginWithEmail } = use(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -20,8 +22,8 @@ const Login = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
-        toast.success("Login Successfully!")
+        navigate("/");
+        toast.success("Login Successfully!");
         // ...
       })
       .catch((error) => {
@@ -34,6 +36,7 @@ const Login = () => {
     signInWithPopup(Auth, googleProvider)
       .then((result) => {
         const user = result.user;
+
         toast.success("Google Sign in Successfully");
       })
       .catch((error) => {
@@ -42,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <section className="flex flex-col md:flex-row justify-center  items-center">
+    <section className="flex justify-center  items-center py-8"> 
       {/* Col */}
       <div className="bg-white/0 lg:block  rounded-l-lg">
         <Lottie
@@ -65,10 +68,9 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                
                 name="email"
                 placeholder="Enter Email Address"
-                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg  mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                 autoFocus
                 autoComplete="on"
                 required
@@ -85,7 +87,7 @@ const Login = () => {
                 name="pass"
                 placeholder="Enter Password"
                 minLength="6"
-                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg  mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                 required
               />
             </div>
@@ -101,7 +103,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6 cursor-pointer"
             >
               Log In
             </button>
@@ -112,7 +114,7 @@ const Login = () => {
           <button
             onClick={handleGoogle}
             type="button"
-            className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+            className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300 cursor-pointer"
           >
             <div className="flex items-center justify-center">
               <FcGoogle size={23} />
@@ -131,7 +133,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <Toaster position="top-right" reverseOrder={false}></Toaster>
+      <Toaster></Toaster>
     </section>
   );
 };
