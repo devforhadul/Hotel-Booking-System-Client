@@ -1,19 +1,65 @@
-import React from 'react';
-import Hero from '../Features/Home/Hero';
-import MapSection from '../Features/Home/MapSection';
-import RoomSection from '../Features/Home/RoomSection';
-import HowBooking from '../Features/Home/HowBooking';
+import React from "react";
+import { motion } from "framer-motion";
+import Hero from "../Features/Home/Hero";
+import MapSection from "../Features/Home/MapSection";
+import RoomSection from "../Features/Home/RoomSection";
+import HowBooking from "../Features/Home/HowBooking";
+import Tesimonial from "../Features/Home/Tesimonial";
 
+const slideUp = {
+  hidden: { opacity: 0, y: 100 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 const Home = () => {
-    return (
-        <div>
-            <Hero></Hero>
-            <MapSection></MapSection>
-            <RoomSection></RoomSection>
-            <HowBooking></HowBooking>
-        </div>
-    );
+  return (
+    <div>
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Hero />
+      </motion.div>
+
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <MapSection />
+      </motion.div>
+
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <RoomSection />
+      </motion.div>
+
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Tesimonial />
+      </motion.div>
+
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <HowBooking />
+      </motion.div>
+    </div>
+  );
 };
 
 export default Home;

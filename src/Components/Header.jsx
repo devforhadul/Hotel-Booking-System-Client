@@ -77,7 +77,9 @@ const Header = () => {
               {navMenu}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Hotel Booking</a>
+          <Link to={'/'}>
+            <p className="btn btn-ghost text-xl">Hotel Booking</p>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navMenu}</ul>
@@ -93,7 +95,10 @@ const Header = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src={user?.photoURL || "https://i.ibb.co/ZYW3VTp/brown-brim.png"}
+                    src={
+                      user?.photoURL ||
+                      "https://i.ibb.co/ZYW3VTp/brown-brim.png"
+                    }
                   />
                 </div>
               </div>
@@ -123,7 +128,6 @@ const Header = () => {
         </div>
       </div>
       <Toaster position="top-right" reverseOrder={false}></Toaster>
-      
     </div>
   );
 };

@@ -3,6 +3,7 @@ import {
   Calendar,
   CalendarDays,
   CheckCircle,
+  CircleUserRound,
   CreditCard,
   DatabaseBackup,
   DollarSign,
@@ -16,6 +17,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { MdRateReview } from "react-icons/md";
 import { AuthContext } from "../context/AuthContext";
+import { Helmet } from "react-helmet";
 
 const MyBooking = () => {
   // Mock booking data
@@ -54,9 +56,8 @@ const MyBooking = () => {
 
   // Handle Cancel button click
   const handleCancel = (bookingId, roomId) => {
-
     const availability = {
-      isAvailable: true
+      isAvailable: true,
     };
 
     Swal.fire({
@@ -183,6 +184,11 @@ const MyBooking = () => {
 
   return (
     <div className=" bg-gray-100 p-4">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Your Booking Rooms</title>
+        <link rel="canonical" href="http://localhost:5173/rooms" />
+      </Helmet>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-10 text-center drop-shadow-lg">
           {/* <Hotel className="inline-block mr-3 text-blue-600" size={48} /> */}
@@ -290,7 +296,7 @@ const MyBooking = () => {
                       onClick={() => {
                         setUpdateId(booking.booked._id), setOpenModal(true);
                       }}
-                      className="flex items-center text-gray-500 gap-2"
+                      className="flex items-center text-gray-500 gap-2 cursor-pointer"
                     >
                       Update Date
                       <DatabaseBackup />
@@ -301,7 +307,7 @@ const MyBooking = () => {
                         setReviewId(booking.room._id);
                         setReviewModal(true);
                       }}
-                      className="flex items-center text-gray-500 gap-2"
+                      className="flex items-center text-gray-500 gap-2 cursor-pointer"
                     >
                       Give Review
                       <MdRateReview />
@@ -319,7 +325,9 @@ const MyBooking = () => {
                     )} */}
 
                     <button
-                      onClick={() => handleCancel(booking.booked._id,  booking.room._id)}
+                      onClick={() =>
+                        handleCancel(booking.booked._id, booking.room._id)
+                      }
                       className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
                     >
                       <XCircle className="mr-2" size={20} /> Cancel
@@ -413,6 +421,7 @@ const MyBooking = () => {
           {/* Modal for review */}
           <dialog id="my_modal_1" className="modal modal-open">
             <div className="modal-box">
+              <h1 className="text-lg font-medium mb-3">{user?.displayName}</h1>
               <div>
                 <form onSubmit={handleSubmitReview} className="space-y-4">
                   <div>
