@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Hero from "../Features/Home/Hero";
 import MapSection from "../Features/Home/MapSection";
 import RoomSection from "../Features/Home/RoomSection";
 import HowBooking from "../Features/Home/HowBooking";
 import Tesimonial from "../Features/Home/Tesimonial";
+import SpecialOfferModal from "../Features/Home/SpecialOfferModal";
 
 const slideUp = {
   hidden: { opacity: 0, y: 100 },
@@ -12,6 +13,15 @@ const slideUp = {
 };
 
 const Home = () => {
+  const [showOffer, setShowOffer] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowOffer(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       <motion.div
@@ -58,6 +68,12 @@ const Home = () => {
       >
         <HowBooking />
       </motion.div>
+
+      <SpecialOfferModal
+        isOpen={showOffer}
+        onClose={() => setShowOffer(false)}
+      ></SpecialOfferModal>
+
     </div>
   );
 };

@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import { MdRateReview } from "react-icons/md";
 import { AuthContext } from "../context/AuthContext";
 import { Helmet } from "react-helmet";
+import moment from "moment/moment";
 
 const MyBooking = () => {
   // Mock booking data
@@ -33,6 +34,7 @@ const MyBooking = () => {
   const [textReview, setTextReview] = useState("");
   const [reviewId, setReviewId] = useState("");
   const [updateId, setUpdateId] = useState("");
+  // const [roomCheckIn, setRoomCheckIn] = useState('');
 
   const bookedRooms = bookings?.map((booking) => {
     const room = data?.find((room) => room._id == booking.roomId);
@@ -55,53 +57,63 @@ const MyBooking = () => {
   }, [user]);
 
   // Handle Cancel button click
-  const handleCancel = (bookingId, roomId) => {
+  const handleCancel = (bookingId, roomId, checkInDate) => {
+    const today = moment();
+    const bookingDate = moment(checkInDate, "YYYY-MM-DD");
+    const cancelationDeadline = bookingDate.clone().subtract(1, "days");
+    const finalDeadline = today.isSameOrBefore(cancelationDeadline, "day");
+
     const availability = {
       isAvailable: true,
     };
 
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, cancel it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:3000/booked/${bookingId}`)
-          .then((res) => {
-            if (res.data.deletedCount > 0) {
-              setBookings((prev) =>
-                prev.filter((booking) => booking._id !== bookingId)
-              );
-              // after cancla availability is true
-              axios
-                .patch(
-                  `http://localhost:3000/rooms/cancel/${roomId}`,
-                  availability
-                )
-                .then((res) => {
-                  console.log("Room availability updated:", res.data);
-                })
-                .catch((error) => {
-                  console.error("Error updating room availability:", error);
-                });
+    if (finalDeadline) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`http://localhost:3000/booked/${bookingId}`)
+            .then((res) => {
+              if (res.data.deletedCount > 0) {
+                setBookings((prev) =>
+                  prev.filter((booking) => booking._id !== bookingId)
+                );
+                // after cancla availability is true
+                axios
+                  .patch(
+                    `http://localhost:3000/rooms/cancel/${roomId}`,
+                    availability
+                  )
+                  .then((res) => {
+                    console.log("Room availability updated:", res.data);
+                  })
+                  .catch((error) => {
+                    console.error("Error updating room availability:", error);
+                  });
 
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your Booking has been deleted.",
-                icon: "success",
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error cancelling booking:", error);
-          });
-      }
-    });
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your Booking has been deleted.",
+                  icon: "success",
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error cancelling booking:", error);
+            });
+        }
+      });
+    } else {
+      toast.error("The cancellation period has expired.");
+      console.log("No");
+    }
   };
 
   // Handle Review submission
@@ -167,19 +179,6 @@ const MyBooking = () => {
         setCheckOutDate("");
         setUpdateId("");
       });
-  };
-
-  // State for status messages (replacing alert)
-  const [statusMessage, setStatusMessage] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
-
-  const showStatusMessage = (message) => {
-    setStatusMessage(message);
-    setShowMessageBox(true);
-    setTimeout(() => {
-      setShowMessageBox(false);
-      setStatusMessage("");
-    }, 3000); // Message disappears after 3 seconds
   };
 
   return (
@@ -326,7 +325,11 @@ const MyBooking = () => {
 
                     <button
                       onClick={() =>
-                        handleCancel(booking.booked._id, booking.room._id)
+                        handleCancel(
+                          booking.booked._id,
+                          booking.room._id,
+                          booking.booked.checkInDate
+                        )
                       }
                       className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
                     >
@@ -336,13 +339,6 @@ const MyBooking = () => {
                 </div>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* Custom Message Box (replaces alert) */}
-        {showMessageBox && (
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-xl text-center z-50 transition-all duration-300 ease-out animate-fade-in-up">
-            {statusMessage}
           </div>
         )}
       </div>
