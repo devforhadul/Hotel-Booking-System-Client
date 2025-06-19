@@ -47,13 +47,14 @@ const MyBooking = () => {
   //Get bookings from the serverghjm
   useEffect(() => {
     setLoading(true);
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     axios
       .get(
-        `https://modern-hotel-booking-server-nine.vercel.app/booked?email=${user?.email}`,{
+        `https://modern-hotel-booking-server-nine.vercel.app/booked?email=${user?.email}`,
+        {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       .then((res) => {
@@ -78,8 +79,9 @@ const MyBooking = () => {
   const handleCancel = (bookingId, roomId, checkInDate) => {
     const today = moment();
     const bookingDate = moment(checkInDate, "YYYY-MM-DD");
-    const cancelationDeadline = bookingDate.clone().subtract(1, "days");
+    const cancelationDeadline = bookingDate.clone().subtract(2, "days");
     const finalDeadline = today.isSameOrBefore(cancelationDeadline, "day");
+
 
     const availability = {
       isAvailable: true,
@@ -132,7 +134,6 @@ const MyBooking = () => {
       });
     } else {
       toast.error("The cancellation period has expired.");
-      
     }
   };
 
@@ -212,7 +213,10 @@ const MyBooking = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Your Booking Rooms</title>
-        <link rel="canonical" href="https://modern-hotel-booking-63402.web.app/my-booking" />
+        <link
+          rel="canonical"
+          href="https://modern-hotel-booking-63402.web.app/my-booking"
+        />
       </Helmet>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-10 text-center drop-shadow-lg">
@@ -291,32 +295,12 @@ const MyBooking = () => {
                     </div> */}
                   </div>
 
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 md:gap-4 mb-3 md:mb-6">
                     <div className="flex items-center text-green-700 text-2xl font-extrabold">
                       <DollarSign className="mr-1 text-green-600" size={24} />
                       {booking.room.pricePerNight}
                     </div>
 
-                    {/* <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        booking.status === "Confirmed"
-                          ? "bg-green-100 text-green-800"
-                          : booking.status === "Pending Payment"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {booking.status === "Confirmed" && (
-                        <CheckCircle className="inline-block mr-1" size={14} />
-                      )}
-                      {booking.status === "Cancelled" && (
-                        <XCircle className="inline-block mr-1" size={14} />
-                      )}
-                      {booking.status === "Pending Payment" && (
-                        <CreditCard className="inline-block mr-1" size={14} />
-                      )}
-                      {booking.status}
-                    </span> */}
                     <div
                       onClick={() => {
                         setUpdateId(booking.booked._id), setOpenModal(true);

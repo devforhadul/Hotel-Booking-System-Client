@@ -30,7 +30,6 @@ const AuthProvider = ({ children }) => {
       axios
         .post("https://modern-hotel-booking-server-nine.vercel.app/jwt", { email: currentUser?.email })
         .then((res) => {
-          console.log(res.data);
           localStorage.setItem('token', res?.data.token);
         });
 
