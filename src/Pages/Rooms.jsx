@@ -1,10 +1,19 @@
 import React from "react";
 import RoomCard from "../Components/RoomCard";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigation } from "react-router";
 import { Helmet } from "react-helmet";
 
 const Rooms = () => {
   const rooms = useLoaderData();
+  const navigation = useNavigation();
+
+  if (navigation.state == "loading") {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100">

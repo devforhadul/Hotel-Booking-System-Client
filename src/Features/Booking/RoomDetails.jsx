@@ -1,22 +1,22 @@
-import React, { use, useState } from "react";
+import { use, useState } from "react";
 // Assuming 'lucide-react' is available for icons. If not, you can replace with inline SVGs or other icon libraries.
+import axios from "axios";
 import {
-  BedDouble,
   Bath,
-  Wifi,
-  Tv,
-  Coffee,
-  Utensils,
-  Snowflake,
-  User,
+  BedDouble,
   CalendarDays,
   CircleX,
+  Coffee,
+  Snowflake,
+  Tv,
+  User,
+  Utensils,
+  Wifi,
 } from "lucide-react";
-import { useLoaderData, useNavigate } from "react-router";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { useLoaderData, useNavigate } from "react-router";
 import ReviewCard from "../../Components/ReviewCard";
+import { AuthContext } from "../../context/AuthContext";
 
 // Main App component
 const RoomDetails = () => {
@@ -113,7 +113,7 @@ const RoomDetails = () => {
     };
 
     axios
-      .post("http://localhost:3000/rooms", bookingData)
+      .post("https://modern-hotel-booking-server-nine.vercel.app/rooms", bookingData)
       .then((response) => {
         console.log("Booking successful:", response.data);
         toast.success("Booking confirmed successfully!");
@@ -121,7 +121,7 @@ const RoomDetails = () => {
         // after confirming booking avaiolability false for not available room
         axios
           .patch(
-            `http://localhost:3000/rooms/booked/${data?._id}`,
+            `https://modern-hotel-booking-server-nine.vercel.app/rooms/booked/${data?._id}`,
             availability
           )
           .then((res) => {

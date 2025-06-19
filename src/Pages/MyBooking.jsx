@@ -2,23 +2,20 @@ import axios from "axios";
 import {
   Calendar,
   CalendarDays,
-  CheckCircle,
-  CircleUserRound,
-  CreditCard,
   DatabaseBackup,
   DollarSign,
   Hotel,
   Star,
   XCircle,
 } from "lucide-react";
-import React, { use, useEffect, useState } from "react";
-import { useLoaderData } from "react-router";
-import toast, { Toaster } from "react-hot-toast";
-import Swal from "sweetalert2";
-import { MdRateReview } from "react-icons/md";
-import { AuthContext } from "../context/AuthContext";
-import { Helmet } from "react-helmet";
 import moment from "moment/moment";
+import { use, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import toast, { Toaster } from "react-hot-toast";
+import { MdRateReview } from "react-icons/md";
+import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import { AuthContext } from "../context/AuthContext";
 
 const MyBooking = () => {
   // Mock booking data
@@ -34,6 +31,7 @@ const MyBooking = () => {
   const [textReview, setTextReview] = useState("");
   const [reviewId, setReviewId] = useState("");
   const [updateId, setUpdateId] = useState("");
+  const [loading, setLoading] = useState(true);
   // const [roomCheckIn, setRoomCheckIn] = useState('');
 
   const bookedRooms = bookings?.map((booking) => {
@@ -46,15 +44,28 @@ const MyBooking = () => {
 
   //Get bookings from the serverghjm
   useEffect(() => {
+    setLoading(true);
     axios
-      .get(`http://localhost:3000/booked?email=${user?.email}`)
+      .get(
+        `https://modern-hotel-booking-server-nine.vercel.app/booked?email=${user?.email}`
+      )
       .then((res) => {
         setBookings(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log("Error fetching bookings:", error);
+        setLoading(false);
       });
   }, [user]);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+      </div>
+    );
+  }
 
   // Handle Cancel button click
   const handleCancel = (bookingId, roomId, checkInDate) => {
@@ -79,7 +90,9 @@ const MyBooking = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete(`http://localhost:3000/booked/${bookingId}`)
+            .delete(
+              `https://modern-hotel-booking-server-nine.vercel.app/booked/${bookingId}`
+            )
             .then((res) => {
               if (res.data.deletedCount > 0) {
                 setBookings((prev) =>
@@ -88,7 +101,7 @@ const MyBooking = () => {
                 // after cancla availability is true
                 axios
                   .patch(
-                    `http://localhost:3000/rooms/cancel/${roomId}`,
+                    `https://modern-hotel-booking-server-nine.vercel.app/rooms/cancel/${roomId}`,
                     availability
                   )
                   .then((res) => {
@@ -129,7 +142,10 @@ const MyBooking = () => {
     };
 
     axios
-      .patch(`http://localhost:3000/rooms/${reviewId}/review`, reviews)
+      .patch(
+        `https://modern-hotel-booking-server-nine.vercel.app/rooms/${reviewId}/review`,
+        reviews
+      )
       .then((res) => {
         console.log(res.data);
         setReviewModal(false);
@@ -153,7 +169,10 @@ const MyBooking = () => {
     };
 
     axios
-      .patch(`http://localhost:3000/booked/update/${updateId}`, updateDate)
+      .patch(
+        `https://modern-hotel-booking-server-nine.vercel.app/booked/update/${updateId}`,
+        updateDate
+      )
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           //  Update UI instantly
@@ -182,7 +201,7 @@ const MyBooking = () => {
   };
 
   return (
-    <div className=" bg-gray-100 p-4">
+    <div className="bg-gray-100 p-4">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Your Booking Rooms</title>

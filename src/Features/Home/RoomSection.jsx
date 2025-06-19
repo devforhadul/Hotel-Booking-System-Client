@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FaMoneyBillWave, FaRulerCombined, FaUsers } from "react-icons/fa";
 import { Link } from "react-router";
-import { FaUsers, FaRulerCombined, FaMoneyBillWave } from "react-icons/fa";
 
 const RoomSection = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/top-rated")
+      .get("https://modern-hotel-booking-server-nine.vercel.app/top-rated")
       .then((response) => {
         setRooms(response.data);
       })

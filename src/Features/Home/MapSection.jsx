@@ -28,6 +28,7 @@ const MapSection = () => {
           center={[23.8103, 90.4125]}
           zoom={7}
           style={{ height: "500px", width: "100%" }}
+          scrollWheelZoom={false}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

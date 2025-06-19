@@ -1,15 +1,15 @@
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home";
-import Rooms from "../Pages/Rooms";
 import MyBooking from "../Pages/MyBooking";
+import Rooms from "../Pages/Rooms";
 
+import axios from "axios";
 import { createBrowserRouter } from "react-router";
 import Login from "../Features/Auth/Login";
-import PrivateRoute from "./PrivateRoute";
 import Register from "../Features/Auth/Register";
-import NotFound from "../Pages/NotFound";
 import RoomDetails from "../Features/Booking/RoomDetails";
-import axios from "axios";
+import NotFound from "../Pages/NotFound";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -22,12 +22,12 @@ const router = createBrowserRouter([
       },
       {
         path: "rooms",
-        loader: () => fetch("http://localhost:3000/rooms"),
+        loader: () => fetch("https://modern-hotel-booking-server-nine.vercel.app/rooms"),
         element: <Rooms></Rooms>,
       },
       {
         path: "rooms/:id",
-        loader: ({params}) => axios.get(`http://localhost:3000/rooms/${params.id}`),
+        loader: ({params}) => axios.get(`https://modern-hotel-booking-server-nine.vercel.app/rooms/${params.id}`),
         element: <RoomDetails></RoomDetails>,
       },
       {
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
-        loader: ()=> axios.get("http://localhost:3000/rooms"),
+        loader: ()=> axios.get("https://modern-hotel-booking-server-nine.vercel.app/rooms"),
       },
       {
         path: "login",
