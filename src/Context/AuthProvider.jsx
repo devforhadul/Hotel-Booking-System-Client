@@ -5,8 +5,9 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { Auth } from "../Firebase/firebase.init";
-import { AuthContext } from "./AuthContext";
+
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -27,9 +28,10 @@ const AuthProvider = ({ children }) => {
       //console.log("Now user: ",currentUser)
 
       axios
-        .post("http://localhost:3000/jwt", { email: currentUser?.email })
+        .post("https://modern-hotel-booking-server-nine.vercel.app/jwt", { email: currentUser?.email })
         .then((res) => {
           console.log(res.data);
+          localStorage.setItem('token', res?.data.token);
         });
 
       setUser(currentUser);

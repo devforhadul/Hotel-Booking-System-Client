@@ -34,7 +34,7 @@ const RoomCard = ({ room }) => {
                     fill="none"
                     stroke="currentColor"
                     strokeLinecap="square"
-                    stroke-miterlimit="10"
+                    strokeMiterlimit="10"
                     strokeWidth="2"
                   ></circle>
                   <polyline
@@ -42,7 +42,7 @@ const RoomCard = ({ room }) => {
                     fill="none"
                     stroke="currentColor"
                     strokeLinecap="square"
-                    stroke-miterlimit="10"
+                    strokeMiterlimit="10"
                     strokeWidth="2"
                   ></polyline>
                 </g>

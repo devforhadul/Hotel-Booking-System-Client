@@ -42,12 +42,19 @@ const MyBooking = () => {
     };
   });
 
+  // https://modern-hotel-booking-server-nine.vercel.app
+
   //Get bookings from the serverghjm
   useEffect(() => {
     setLoading(true);
+    const token = localStorage.getItem('token')
     axios
       .get(
-        `https://modern-hotel-booking-server-nine.vercel.app/booked?email=${user?.email}`
+        `https://modern-hotel-booking-server-nine.vercel.app/booked?email=${user?.email}`,{
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       )
       .then((res) => {
         setBookings(res.data);
