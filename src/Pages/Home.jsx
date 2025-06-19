@@ -6,6 +6,7 @@ import RoomSection from "../Features/Home/RoomSection";
 import Tesimonial from "../Features/Home/Tesimonial";
 import SpecialOfferModal from "../Features/Home/SpecialOfferModal";
 import TotalServe from "../Features/Home/TotalServe";
+import TopCity from "../Features/Home/TopCity";
 
 const slideUp = {
   hidden: { opacity: 0, y: 100 },
@@ -58,6 +59,15 @@ const Home = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         <Tesimonial />
+      </motion.div>
+
+      <motion.div
+        variants={slideUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <TopCity></TopCity>
       </motion.div>
 
       <motion.div
