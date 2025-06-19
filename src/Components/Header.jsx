@@ -80,7 +80,7 @@ const Header = () => {
             </ul>
           </div>
           <Link to={'/'}>
-            <p className="btn btn-ghost text-xl">Hotel Booking</p>
+            <p className="font-bold ml-5 text-xl">Hotel Booking</p>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

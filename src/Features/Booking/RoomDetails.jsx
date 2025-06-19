@@ -47,6 +47,8 @@ const RoomDetails = () => {
     maxGuests: 2,
   };
 
+
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
@@ -118,7 +120,7 @@ const RoomDetails = () => {
         bookingData
       )
       .then((response) => {
-        console.log("Booking successful:", response.data);
+        //console.log("Booking successful:", response.data);
         toast.success("Booking confirmed successfully!");
         navigate("/my-booking");
         // after confirming booking avaiolability false for not available room
@@ -128,7 +130,7 @@ const RoomDetails = () => {
             availability
           )
           .then((res) => {
-            console.log("Room availability updated:", res.data);
+            //console.log("Room availability updated:", res.data);
           })
           .catch((error) => {
             console.error("Error updating room availability:", error);
@@ -199,7 +201,7 @@ const RoomDetails = () => {
 
         {/* Rating this room*/}
         <div className="mb-4">
-          <p className="px-4 py-1.5 rounded-xl border bg-[#ecf3fe] border-[#4073bf] inline-block">
+          <p className="px-4 py-1.5 rounded-md border bg-[#ecf3fe] border-[#4073bf] inline-block">
             {data?.reviewRating}/5.0
           </p>
         </div>
@@ -220,7 +222,15 @@ const RoomDetails = () => {
 
             {/* Fecilites */}
             <section className="p-6 bg-green-50 rounded-lg shadow-inner">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
+                Hotel Details
+              </h2>
+              <div className="mb-3"> 
+                <p>{data?.hotelType} Hotel</p>
+                <p>Location: {data?.location} </p>
+                <p>Bad type: {data?.bedType}</p>
+              </div>
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
                 Facilities
               </h2>
               <div className="">

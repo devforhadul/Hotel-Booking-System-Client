@@ -20,7 +20,8 @@ const Rooms = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Explore Rooms</title>
-        <link rel="canonical" href="http://localhost:5173/rooms" />
+        <link rel="canonical" href="https://modern-hotel-booking-63402.web.app/
+rooms" />
       </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 py-5 w-11/12 mx-auto">
         {rooms.map(

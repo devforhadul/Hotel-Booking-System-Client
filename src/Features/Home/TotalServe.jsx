@@ -6,7 +6,7 @@ import { FaLocationArrow } from "react-icons/fa6";
 
 const TotalServe = () => {
   return (
-    <div className="py-12">
+    <div className="py-10">
       <div className="flex justify-around items-center w-11/12 mx-auto">
         <div className="flex items-center gap-3">
           <div className="border border-blue-400 p-3 rounded-full">

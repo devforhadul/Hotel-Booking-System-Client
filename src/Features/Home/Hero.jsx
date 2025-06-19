@@ -21,7 +21,6 @@ const Hero = () => {
           delay: 2500, // 2.5 seconds per slide
           disableOnInteraction: false, // auto slide continues after manual swipe
         }}
-        modules={[Autoplay]}
         spaceBetween={30}
         slidesPerView={1}
       >

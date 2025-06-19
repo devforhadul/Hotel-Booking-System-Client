@@ -112,7 +112,7 @@ const MyBooking = () => {
                     availability
                   )
                   .then((res) => {
-                    console.log("Room availability updated:", res.data);
+                    //console.log("Room availability updated:", res.data);
                   })
                   .catch((error) => {
                     console.error("Error updating room availability:", error);
@@ -132,7 +132,7 @@ const MyBooking = () => {
       });
     } else {
       toast.error("The cancellation period has expired.");
-      console.log("No");
+      
     }
   };
 
@@ -212,7 +212,7 @@ const MyBooking = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Your Booking Rooms</title>
-        <link rel="canonical" href="http://localhost:5173/rooms" />
+        <link rel="canonical" href="https://modern-hotel-booking-63402.web.app/my-booking" />
       </Helmet>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-10 text-center drop-shadow-lg">
