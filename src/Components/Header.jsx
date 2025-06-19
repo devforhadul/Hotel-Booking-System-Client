@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import { signOut } from "firebase/auth";
 import { Auth } from "../Firebase/firebase.init";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 
 const Header = () => {
   const { user } = use(AuthContext);
+  const navigate = useNavigate();
   //console.log(user)
 
   const handleLogout = () => {
@@ -24,6 +25,7 @@ const Header = () => {
         signOut(Auth)
           .then(() => {
             // Sign-out successful.
+            navigate('/')
             toast.success("Logout successfully!");
           })
           .catch((error) => {

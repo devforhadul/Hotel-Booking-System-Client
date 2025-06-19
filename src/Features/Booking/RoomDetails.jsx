@@ -54,6 +54,7 @@ const RoomDetails = () => {
   const [message, setMessage] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
+
   // Handle image navigation
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % room.images.length);
@@ -67,13 +68,16 @@ const RoomDetails = () => {
 
   // Handle booking submission
   const handleBooking = (e) => {
-
-    if(!user){
+    e.preventDefault();
+    if (!user) {
       toast.error("Please login to book a room.");
-      return navigate('/login')
+      return navigate("/login");
     }
 
-    e.preventDefault();
+    if (!data?.isAvailable) {
+      return toast.error("Not Available this room Right now!!");
+    }
+
     if (!checkInDate || !checkOutDate || numberOfGuests <= 0) {
       setMessage("Please fill in all booking details.");
       return;
@@ -88,10 +92,6 @@ const RoomDetails = () => {
       );
       return;
     }
-    // In a real application, you would send this data to a backend API
-    // setMessage(
-    //   `Booking for ${room.name} from ${checkInDate} to ${checkOutDate} for ${numberOfGuests} guests confirmed! (This is a demo message)`
-    // );
 
     setOpenModal(true);
   };
@@ -113,7 +113,10 @@ const RoomDetails = () => {
     };
 
     axios
-      .post("https://modern-hotel-booking-server-nine.vercel.app/rooms", bookingData)
+      .post(
+        "https://modern-hotel-booking-server-nine.vercel.app/rooms",
+        bookingData
+      )
       .then((response) => {
         console.log("Booking successful:", response.data);
         toast.success("Booking confirmed successfully!");
@@ -190,7 +193,7 @@ const RoomDetails = () => {
         </div>
 
         {/* Room Header */}
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
           {data?.name}
         </h1>
 

@@ -25,7 +25,7 @@ const Rooms = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 py-5 w-11/12 mx-auto">
         {rooms.map(
           (room, idx) =>
-            room.isAvailable && <RoomCard key={idx} room={room}></RoomCard>
+             <RoomCard key={idx} room={room}></RoomCard>
         )}
       </div>
     </div>

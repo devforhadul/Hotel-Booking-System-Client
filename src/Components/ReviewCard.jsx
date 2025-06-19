@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import React from "react";
 
 const ReviewCard = ({ review }) => {
-  console.log(review?.photo)
+ // console.log(review?.photo)
   return (
     <div>
       <div className="bg-blue-50 shadow-lg rounded-xl p-6 mb-5">

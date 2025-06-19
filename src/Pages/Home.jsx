@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import Hero from "../Features/Home/Hero";
 import MapSection from "../Features/Home/MapSection";
 import RoomSection from "../Features/Home/RoomSection";
-import HowBooking from "../Features/Home/HowBooking";
 import Tesimonial from "../Features/Home/Tesimonial";
 import SpecialOfferModal from "../Features/Home/SpecialOfferModal";
+import TotalServe from "../Features/Home/TotalServe";
 
 const slideUp = {
   hidden: { opacity: 0, y: 100 },
@@ -66,9 +66,10 @@ const Home = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <HowBooking />
+        <TotalServe></TotalServe>
       </motion.div>
 
+      
       <SpecialOfferModal
         isOpen={showOffer}
         onClose={() => setShowOffer(false)}

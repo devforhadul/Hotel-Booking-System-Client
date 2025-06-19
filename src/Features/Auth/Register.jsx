@@ -18,8 +18,22 @@ const Register = () => {
     const newData = Object.fromEntries(formData.entries());
     const { name, email, password, cPassword, photoUrl } = newData;
 
+    // Password validation regex
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+
+    // Validation
     if (password !== cPassword) {
-      setErrorMessage("Password do not match");
+      setErrorMessage("Passwords do not match");
+      return;
+    } else if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long");
+      return;
+    } else if (!hasUppercase) {
+      setErrorMessage("Password must contain at least one uppercase letter");
+      return;
+    } else if (!hasLowercase) {
+      setErrorMessage("Password must contain at least one lowercase letter");
       return;
     }
 
@@ -32,7 +46,7 @@ const Register = () => {
         displayName: name,
         photoURL: photoUrl,
       });
-      navigate('/');
+      navigate("/");
       toast.success("Account create successfully.");
     } catch (error) {
       console.log(error.message);
@@ -54,7 +68,9 @@ const Register = () => {
           </div>
           {/* Col */}
           <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-            <h3 className="pt-4 text-2xl font-bold text-center">Create an Account!</h3>
+            <h3 className="pt-4 text-2xl font-bold text-center">
+              Create an Account!
+            </h3>
             <form
               onSubmit={handleSignup}
               className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
@@ -73,6 +89,7 @@ const Register = () => {
                     type="text"
                     name="name"
                     placeholder="Enter Name "
+                    required
                   />
                 </div>
               </div>
@@ -88,6 +105,7 @@ const Register = () => {
                   name="email"
                   type="email"
                   placeholder="Email"
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -102,6 +120,7 @@ const Register = () => {
                   name="photoUrl"
                   type="text"
                   placeholder="Photo url..."
+                  required
                 />
               </div>
               <div className="mb-4 md:flex md:justify-between">
@@ -117,6 +136,7 @@ const Register = () => {
                     name="password"
                     type="password"
                     placeholder="******************"
+                    required
                   />
                   <p className="text-xs italic text-red-500">{errorMessage}</p>
                 </div>
@@ -132,6 +152,7 @@ const Register = () => {
                     name="cPassword"
                     type="password"
                     placeholder="******************"
+                    required
                   />
                 </div>
               </div>
