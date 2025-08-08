@@ -1,5 +1,11 @@
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  ZoomControl,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
@@ -20,26 +26,31 @@ const MapSection = () => {
 
   return (
     <div className="">
-      <div className="w-11/12 mx-auto py-10">
+      <div className="w-11/12 mx-auto pt-8 md:pt-12 lg:pt-16">
         <div>
-          <h1 className="text-2xl font-bold mb-6">Hotel Map</h1>
+          <h1 className="text-2xl text-center text-Text font-bold mb-6">Hotel Map</h1>
         </div>
-        <MapContainer
-          center={[23.8103, 90.4125]}
-          zoom={7}
-          style={{ height: "500px", width: "100%" }}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap contributors"
-          />
-          {locations.map((loc) => (
-            <Marker key={loc.id} position={[loc.lat, loc.lng]}>
-              <Popup>{loc.name}</Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+        <div className="">
+          <MapContainer
+            center={[23.8103, 90.4125]}
+            zoom={7}
+            style={{ height: "500px", width: "100%" }}
+            scrollWheelZoom={false}
+            zoomControl={false}
+            className=""
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; OpenStreetMap contributors"
+            />
+            {locations.map((loc) => (
+              <Marker key={loc.id} position={[loc.lat, loc.lng]}>
+                <Popup>{loc.name}</Popup>
+              </Marker>
+            ))}
+            <ZoomControl position="bottomright" />
+          </MapContainer>
+        </div>
       </div>
     </div>
   );

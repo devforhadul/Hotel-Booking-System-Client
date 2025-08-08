@@ -2,41 +2,7 @@ import axios from "axios";
 import { Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-// Testimonial data
-// const testimonials = [
-//   {
-//     id: 1,
-//     quote:
-//       "This service has truly transformed how we manage our projects. The intuitive interface and powerful features have made collaboration seamless and efficient. Highly recommended!",
-//     name: "Alice Johnson",
-//     title: "CEO, Tech Solutions",
-//     image: "https://placehold.co/100x100/A78BFA/ffffff?text=AJ",
-//   },
-//   {
-//     id: 2,
-//     quote:
-//       "An outstanding platform with exceptional customer support. We've seen a significant increase in productivity since integrating this into our workflow.",
-//     name: "Bob Williams",
-//     title: "Marketing Director, Creative Minds",
-//     image: "https://placehold.co/100x100/60A5FA/ffffff?text=BW",
-//   },
-//   {
-//     id: 3,
-//     quote:
-//       "Absolutely revolutionary! The customization options are endless, and it perfectly adapts to our unique business needs. A game-changer for sure.",
-//     name: "Carol Davis",
-//     title: "Product Manager, Innovate Inc.",
-//     image: "https://placehold.co/100x100/F87171/ffffff?text=CD",
-//   },
-//   {
-//     id: 4,
-//     quote:
-//       "Reliable, robust, and incredibly easy to use. This tool has streamlined our operations and provided clear insights into our performance. Fantastic!",
-//     name: "David Lee",
-//     title: "Operations Lead, Global Corp",
-//     image: "https://placehold.co/100x100/4ADE80/ffffff?text=DL",
-//   },
-// ];
+
 
 const Tesimonial = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,8 +36,8 @@ const Tesimonial = () => {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <div className=" bg-gradient-to-br  flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="relative w-11/12 mx-auto bg-green-50 shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center">
+    <div className="bg-gradient-to-br  flex items-center justify-center pt-8 md:pt-12 lg:pt-16">
+      <div className="relative w-11/12 mx-auto bg-Secondary/20 shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center">
         {/* Testimonial Quote */}
         <h1 className="text-2xl font-bold mb-6">Our Client Reviews</h1>
         <blockquote className="text-center text-lg sm:text-xl font-medium text-gray-800 mb-6 leading-relaxed italic">

@@ -26,7 +26,16 @@
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   outline: none;
+}
+
+/* For taiwind globle color */
+@theme {
+  --color-Text: oklch(0.1961 0.026 322.6); /* #110d1a */
+  --color-Background: oklch(0.9726 0.004 313.8); /* #f8f6fa */
+  --color-Primary: oklch(0.559 0.114 296.8); /* #7f64b0 */
+  --color-Secondary: oklch(0.7614 0.0739 318.64); /* #c6a3d0*/
+  --color-Accent: oklch(0.684 0.105 329.5); /* #bf86c1 */
 }

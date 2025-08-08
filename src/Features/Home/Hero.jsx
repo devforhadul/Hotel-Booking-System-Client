@@ -31,12 +31,12 @@ const Hero = () => {
             className="w-full h-[500px] object-cover"
           />
           <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white px-4">
-            <h2 className="text-4xl font-bold mb-4">Welcome to Our Hotel</h2>
+            <h2 className="text-4xl font-bold mb-4 bg-p">Welcome to Our Hotel</h2>
             <p className="text-lg mb-6 max-w-xl">
               Experience luxury, comfort, and convenience in one place.
             </p>
             <Link to={"/rooms"}>
-              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+              <button className="bg-Primary text-white font-semibold px-6 py-2 rounded-full hover:bg-Primary/90 cursor-pointer transition">
                 Book Now
               </button>
             </Link>

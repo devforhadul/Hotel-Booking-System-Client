@@ -10,6 +10,7 @@ import Register from "../Features/Auth/Register";
 import RoomDetails from "../Features/Booking/RoomDetails";
 import NotFound from "../Pages/NotFound";
 import PrivateRoute from "./PrivateRoute";
+import Contact from "../Pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -22,13 +23,21 @@ const router = createBrowserRouter([
       },
       {
         path: "rooms",
-        loader: () => fetch("https://modern-hotel-booking-server-nine.vercel.app/rooms"),
+        loader: () =>
+          fetch("https://modern-hotel-booking-server-nine.vercel.app/rooms"),
         element: <Rooms></Rooms>,
       },
       {
         path: "rooms/:id",
-        loader: ({params}) => axios.get(`https://modern-hotel-booking-server-nine.vercel.app/rooms/${params.id}`),
+        loader: ({ params }) =>
+          axios.get(
+            `https://modern-hotel-booking-server-nine.vercel.app/rooms/${params.id}`
+          ),
         element: <RoomDetails></RoomDetails>,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "my-booking",
@@ -37,7 +46,10 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
-        loader: ()=> axios.get("https://modern-hotel-booking-server-nine.vercel.app/rooms"),
+        loader: () =>
+          axios.get(
+            "https://modern-hotel-booking-server-nine.vercel.app/rooms"
+          ),
       },
       {
         path: "login",

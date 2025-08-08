@@ -5,7 +5,7 @@ const ReviewCard = ({ review }) => {
  // console.log(review?.photo)
   return (
     <div>
-      <div className="bg-blue-50 shadow-lg rounded-xl p-6 mb-5">
+      <div className="bg-Secondary/30 shadow-lg rounded-xl p-6 mb-5">
         <div className="flex justify-between items-center mb-4">
           <div>
             <img

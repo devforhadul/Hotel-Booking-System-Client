@@ -1,7 +1,7 @@
 import React from "react";
-import RoomCard from "../Components/RoomCard";
 import { useLoaderData, useNavigation } from "react-router";
 import { Helmet } from "react-helmet";
+import RoomCard from "../Components/card/RoomCard";
 
 const Rooms = () => {
   const rooms = useLoaderData();
@@ -16,14 +16,14 @@ const Rooms = () => {
   }
 
   return (
-    <div className="bg-gray-100">
+    <div className="py-5">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Explore Rooms</title>
         <link rel="canonical" href="https://modern-hotel-booking-63402.web.app/
 rooms" />
       </Helmet>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 py-5 w-11/12 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-5 w-11/12 mx-auto">
         {rooms.map(
           (room, idx) =>
              <RoomCard key={idx} room={room}></RoomCard>

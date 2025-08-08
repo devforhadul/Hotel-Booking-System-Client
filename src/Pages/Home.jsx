@@ -24,7 +24,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-Background">
       <motion.div
         variants={slideUp}
         initial="hidden"

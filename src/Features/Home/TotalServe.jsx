@@ -6,11 +6,11 @@ import { FaLocationArrow } from "react-icons/fa6";
 
 const TotalServe = () => {
   return (
-    <div className="py-10 mb-5 w-11/12 max-w-7xl mx-auto">
+    <div className="w-11/12 mx-auto py-8 md:py-12 lg:py-16">
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
     
     {/* Registered Rooms */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center">
+    <div className="flex items-center gap-4 justify-start sm:justify-center bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <MdOutlineBedroomParent className="text-blue-400" size={35} />
       </div>
@@ -21,7 +21,7 @@ const TotalServe = () => {
     </div>
 
     {/* Guests */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <FaUserAlt className="text-blue-400" size={35} />
       </div>
@@ -32,7 +32,7 @@ const TotalServe = () => {
     </div>
 
     {/* Tourist Spots */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <FaLocationArrow className="text-blue-400" size={35} />
       </div>
@@ -43,7 +43,7 @@ const TotalServe = () => {
     </div>
 
     {/* Our Support */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5  rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <IoMdCall className="text-blue-400" size={35} />
       </div>

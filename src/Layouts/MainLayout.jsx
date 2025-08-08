@@ -1,12 +1,14 @@
 import React from "react";
-import Header from "../Components/Header";
 import { Outlet } from "react-router";
-import Footer from '../Components/Footer'
+import Footer from "../Components/Footer";
+import NavBar from "../Components/NavBar";
 
 const MainLayout = () => {
   return (
-    <div>
-      <Header></Header>
+    <div className="bg-Background">
+      <div className="sticky top-0 z-[999] bg-white shadow">
+        <NavBar />
+      </div>
       <main className="">
         <Outlet></Outlet>
       </main>

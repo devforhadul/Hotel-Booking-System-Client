@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth";
 import { Auth } from "../Firebase/firebase.init";
 import Swal from "sweetalert2";
 
-const Header = () => {
+const NavBar = () => {
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   //console.log(user)
@@ -47,12 +47,15 @@ const Header = () => {
       <li>
         <Link to={"/my-booking"}>My Booking</Link>
       </li>
+      <li>
+        <Link to={"/contact"}>Contact</Link>
+      </li>
     </>
   );
 
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar bg-base-100 backdrop-blur-md">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -80,7 +83,7 @@ const Header = () => {
             </ul>
           </div>
           <Link to={'/'}>
-            <p className="font-bold ml-5 text-xl">Hotel Booking</p>
+            <p className="font-bold ml-5 text-xl">TripHaven</p>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -134,4 +137,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavBar;

@@ -18,12 +18,12 @@ const RoomSection = () => {
   }, []);
 
   return (
-    <div className="w-11/12 mx-auto py-10">
+    <div className="w-11/12 mx-auto pt-8 md:pt-12 lg:pt-16">
       <h1 className="text-2xl font-bold mb-6">Top Rated Rooms</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {rooms.map((room, idx) => (
           <Link key={idx} to={`/rooms/${room?._id}`}>
-            <div className="rounded-lg overflow-hidden shadow-md bg-white">
+            <div className="rounded-lg overflow-hidden shadow-md bg-Secondary/20">
               <img
                 src={room?.images[0]} // Replace with your own image
                 alt="Room"
@@ -55,8 +55,8 @@ const RoomSection = () => {
                   </div>
                 </div>
 
-                <button className="w-full mt-3 bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">
-                  BOOK NOW!
+                <button className="w-full mt-3 bg-Primary font-semibold text-white py-2 rounded hover:bg-Primary/90 transition cursor-pointer">
+                  BOOK NOW
                 </button>
               </div>
             </div>
