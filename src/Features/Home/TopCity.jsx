@@ -73,7 +73,7 @@ const TopCity = () => {
       </style>
       <div className="w-11/12 mx-auto pt-8 md:pt-12 lg:pt-16">
         {/* Title section */}
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 px-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-Text dark:text-white mb-6 px-2">
           Hotels In Top Cities 
         </h2>
 

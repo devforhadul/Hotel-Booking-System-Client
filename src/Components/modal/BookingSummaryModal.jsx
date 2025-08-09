@@ -1,7 +1,7 @@
 import { CircleX } from "lucide-react";
 import React from "react";
 
-export default function BookingSummaryModal({data, user, setOpenModal}) {
+export default function BookingSummaryModal({data, user, setOpenModal, handleConfirmBooking}) {
   console.log(data);
   return (
     <dialog id="my_modal_1" className="modal modal-open">
@@ -39,7 +39,7 @@ export default function BookingSummaryModal({data, user, setOpenModal}) {
                         </li> */}
           </ul>
           <button
-            //onClick={handleConfirmBooking}
+            onClick={handleConfirmBooking}
             className="w-full mt-4 cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
           >
             Confirm Booking

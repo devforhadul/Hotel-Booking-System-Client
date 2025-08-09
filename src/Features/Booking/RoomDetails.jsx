@@ -6,6 +6,8 @@ import {
   CalendarDays,
   CircleX,
   Coffee,
+  Heart,
+  Share2,
   Snowflake,
   Tv,
   User,
@@ -25,49 +27,16 @@ import ReviewCard from "../../Components/card/ReviewCard";
 const RoomDetails = () => {
   const { data } = useLoaderData();
   const { user } = use(AuthContext);
-  // Dummy room data for demonstration
-  const room = {
-    id: "room-101",
-    name: "Deluxe King Suite",
-    description:
-      "Experience unparalleled comfort in our spacious Deluxe King Suite. Featuring a luxurious king-sized bed, a modern en-suite bathroom, and panoramic city views, this suite is designed for ultimate relaxation. Perfect for couples or solo travelers seeking a premium stay.",
-    pricePerNight: 250,
-    images: [
-      "https://placehold.co/800x500/A7F3D0/10B981?text=Room+View+1",
-      "https://placehold.co/800x500/93C5FD/1D4ED8?text=Room+View+2",
-      "https://placehold.co/800x500/FECACA/EF4444?text=Room+View+3",
-      "https://placehold.co/800x500/DDD6FE/6D28D9?text=Bathroom+View",
-    ],
-    amenities: [
-      { icon: <BedDouble size={20} />, name: "King Bed" },
-      { icon: <Bath size={20} />, name: "Private Bathroom" },
-      { icon: <Wifi size={20} />, name: "Free Wi-Fi" },
-      { icon: <Tv size={20} />, name: "Smart TV" },
-      { icon: <Coffee size={20} />, name: "Coffee Maker" },
-      { icon: <Utensils size={20} />, name: "Mini-bar" },
-      { icon: <Snowflake size={20} />, name: "Air Conditioning" },
-    ],
-    maxGuests: 2,
-  };
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [message, setMessage] = useState("");
-  const [openModal, setOpenModal] = useState(false);
+  const [confirmBookModal, setConfirmBookModal] = useState(false);
   const navigate = useNavigate();
 
-  // Handle image navigation
-  const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % room.images.length);
-  };
 
-  const goToPreviousImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + room.images.length) % room.images.length
-    );
-  };
 
   // Handle booking submission
   const handleBooking = (e) => {
@@ -96,7 +65,7 @@ const RoomDetails = () => {
       return;
     }
 
-    setOpenModal(true);
+    confirmBookModal(true);
   };
 
   // Handle booking confirmation
@@ -149,72 +118,116 @@ const RoomDetails = () => {
   };
 
 
-  const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+
 
   return (
     <div className="w-11/12 mx-auto">
-      <div className="grid grid-cols-12 py-8 gap-5">
+      <div className="grid grid-cols-12 py-8 gap-10">
         {/* Left side */}
         <div className="col-span-8">
           {/* Images show here... */}
           <img
-            src={data?.images[currentImageIndex]}
-            alt={`${data?.name} - View ${currentImageIndex + 1}`}
+            src={data?.images[0]}
+            alt=""
             className="w-full h-96 object-cover rounded-lg"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src =
-                "https://placehold.co/800x500/CCCCCC/666666?text=Image+Unavailable";
-            }} // Fallback for broken images
           />
           {/* romms details show here.. */}
-          <div>
+          <div className="mt-3">
             <div className="flex justify-between items-center">
               <p>Location</p>
               <div className="flex gap-2">
-                <p>Share</p>
-                <p>Save</p>
+                <div className="flex items-center">
+                  <Share2 size={17}/>
+                  <p className="text-md font-medium">Share</p>
+                </div>
+                <div className="flex items-center">
+                  <p className="text-md font-medium">Save</p>
+                  <Heart size={17}/>
+                </div>
+
               </div>
             </div>
-            <h3>Title</h3>
-            <p>5 Star</p>
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
+              {data?.name}
+            </h1>
+            {/* Rating this room*/}
+            <div className="mb-4">
+              <p className="px-4 py-1.5 rounded-md border bg-[#ecf3fe] border-[#4073bf] inline-block">
+                {data?.reviewRating}/5.0
+              </p>
+            </div>
             {/* Tab */}
 
             <div>
               <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                  <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)} aria-label="basic tabs example">
                     <Tab label="Room Details" />
                     <Tab label="Policies" />
                     <Tab label="Reviews" />
                   </Tabs>
                 </Box>
                 {/* Content here */}
+                {/* Left Column: Description & Amenities */}
                 {
-                  value == 0 && <div>Room details here..</div>
-                }
-                {
-                  value == 1 && <div>Polices here..</div>
-                }
-                {/* Reviews */}
-                {value == 2 && (
-                    <div className=" rounded-xl overflow-hidden my-5">
-                      {/* <h3 className="text-2xl font-bold mb-3">Reviews</h3> */}
-                      {data?.reviews?.length > 0 ? (
-                        data?.reviews.map((review, idx) => (
-                          <ReviewCard key={idx} review={review}></ReviewCard>
-                        ))
-                      ) : (
-                        <div className="text-center text-gray-500">
-                          <p>No reviews yet. Be the first to review this room!</p>
+                  tabValue == 0 && (
+                    <div className="my-3">
+                      {/* Description */}
+                      <section className="mb-3">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                          Description
+                        </h2>
+                        <p className="text-gray-700 leading-relaxed">
+                          {data?.description}
+                        </p>
+                      </section>
+
+                      {/* Fecilites */}
+                      <section className="">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                          Hotel Details
+                        </h2>
+                        <div className="mb-3">
+                          <p>{data?.hotelType} Hotel</p>
+                          <p>Location: {data?.location} </p>
+                          <p>Bad type: {data?.bedType}</p>
                         </div>
-                      )}
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                          Facilities
+                        </h2>
+                        <div className="">
+                          {data.facilities.map((facilitie, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center space-x-3 text-gray-700"
+                            >
+                              {/* <span className="text-blue-500">{amenity.icon}</span> */}
+                              <li>{facilitie}</li>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
                     </div>
                   )
+                }
+                {
+                  tabValue == 1 && <div>Polices here..</div>
+                }
+                {tabValue == 2 && (
+                  <div className=" rounded-xl overflow-hidden my-3">
+                    {/* <h3 className="text-2xl font-bold mb-3">Reviews</h3> */}
+                    {data?.reviews?.length > 0 ? (
+                      data?.reviews.map((review, idx) => (
+                        <ReviewCard key={idx} review={review}></ReviewCard>
+                      ))
+                    ) : (
+                      <div className="text-center text-gray-500">
+                        <p>No reviews yet. Be the first to review this room!</p>
+                      </div>
+                    )}
+                  </div>
+                )
                 }
               </Box>
             </div>
@@ -225,7 +238,7 @@ const RoomDetails = () => {
         <div className="col-span-4">
           {/* Booking Form */}
           <div className="md:col-span-1">
-            <aside className="bg-gradient-to-br bg-Secondary/20 p-6 rounded-md text-black">
+            <aside className="bg-gradient-to-br bg-Secondary/20 dark:bg-slate-800/50 p-6 rounded-md text-black">
               <h2 className="text-2xl font-semibold mb-4">
                 ${data?.pricePerNight}{" "}
                 <span className="text-xl font-medium">/ night</span>
@@ -303,7 +316,7 @@ const RoomDetails = () => {
                 </div>
                 <button
                   type="submit"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => setConfirmBookModal(true)}
                   className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
                 >
                   Book Now
@@ -311,16 +324,12 @@ const RoomDetails = () => {
               </form>
 
               {/* modal */}
-              {openModal && <BookingSummaryModal data={data} user={user} setOpenModal={setOpenModal} />}
+              {confirmBookModal && <BookingSummaryModal data={data} user={user} setOpenModal={setConfirmBookModal} handleConfirmBooking={handleConfirmBooking} />}
             </aside>
           </div>
         </div>
-      </div >
-
-
-
-
-    </div >
+      </div>
+    </div>
   );
 };
 

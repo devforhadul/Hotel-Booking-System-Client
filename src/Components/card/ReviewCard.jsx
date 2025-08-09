@@ -7,7 +7,7 @@ const ReviewCard = ({ review }) => {
     <div>
       <div className="bg-Secondary/30 shadow-lg rounded-xl p-6 mb-5">
         <div className="flex justify-between items-center mb-4">
-          <div>
+          <div className="flex items-center">
             <img
               src={
                 review?.photo ||
@@ -17,11 +17,12 @@ const ReviewCard = ({ review }) => {
               className="w-10 h-10 rounded-full mr-3"
             />
             <div>
-              <p className="font-semibold">{review?.name || "Anonymous"}</p>
+              <p className="font-medium">{review?.name || "Anonymous"}</p>
               <p className="text-sm text-gray-500">{review?.email}</p>
+              <div className="flex items-center gap-1"><Star size={20}></Star>{review?.reviewRating}</div>
             </div>
           </div>
-          <div className="flex items-center gap-1"><Star size={20}></Star>{review?.reviewRating}</div>
+          
         </div>
         <p className="text-gray-700">
           {review?.description || "No review provided."}

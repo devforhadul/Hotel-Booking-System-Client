@@ -10,18 +10,18 @@ const TotalServe = () => {
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
     
     {/* Registered Rooms */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
+    <div className="flex items-center gap-4 justify-start sm:justify-center bg-Secondary/20 dark:bg-slate-800/50 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <MdOutlineBedroomParent className="text-blue-400" size={35} />
       </div>
       <div>
-        <p className="font-semibold text-lg">400</p>
+        <p className="font-semibold text-lg">199+</p>
         <h5 className="text-md">Registered Rooms</h5>
       </div>
     </div>
 
     {/* Guests */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 dark:bg-slate-800/50 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <FaUserAlt className="text-blue-400" size={35} />
       </div>
@@ -32,7 +32,7 @@ const TotalServe = () => {
     </div>
 
     {/* Tourist Spots */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 dark:bg-slate-800/50 py-5 rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <FaLocationArrow className="text-blue-400" size={35} />
       </div>
@@ -43,7 +43,7 @@ const TotalServe = () => {
     </div>
 
     {/* Our Support */}
-    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 py-5  rounded-md shadow-md hover:shadow-lg transition duration-300">
+    <div className="flex items-center gap-4 justify-start sm:justify-center  bg-Secondary/20 dark:bg-slate-800/50 py-5  rounded-md shadow-md hover:shadow-lg transition duration-300">
       <div className="border border-blue-400 p-3 rounded-full">
         <IoMdCall className="text-blue-400" size={35} />
       </div>

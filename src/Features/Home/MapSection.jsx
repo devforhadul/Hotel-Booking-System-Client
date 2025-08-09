@@ -28,7 +28,7 @@ const MapSection = () => {
     <div className="">
       <div className="w-11/12 mx-auto pt-8 md:pt-12 lg:pt-16">
         <div>
-          <h1 className="text-2xl text-center text-Text font-bold mb-6">Hotel Map</h1>
+          <h1 className="text-2xl text-center text-Text dark:text-white font-semibold mb-6">Hotel Map</h1>
         </div>
         <div className="">
           <MapContainer

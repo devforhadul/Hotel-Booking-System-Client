@@ -217,7 +217,7 @@ const MyBooking = () => {
         />
       </Helmet>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-10 text-center drop-shadow-lg">
+        <h1 className="text-2xl font-semibold text-Text dark:text-white mb-10 text-center drop-shadow-lg">
           {/* <Hotel className="inline-block mr-3 text-blue-600" size={48} /> */}
           My Bookings
         </h1>
@@ -233,7 +233,7 @@ const MyBooking = () => {
             {bookedRooms.map((booking) => (
               <div
                 key={booking.room._id}
-                className="grid grid-cols-12  bg-white rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.01] hover:shadow-3xl border border-gray-100" // Removed fixed width and flex-shrink-0
+                className="grid grid-cols-12  bg-white dark:bg-slate-800/50 rounded-md shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.01] hover:shadow-xl " // Removed fixed width and flex-shrink-0
               >
                 <div className="col-span-4 relative">
                   <img
@@ -256,7 +256,7 @@ const MyBooking = () => {
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     {booking.hotelName}
                   </h2>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <p className="text-Text dark:text-white text-sm mb-4">
                     <Hotel
                       className="inline-block mr-1 text-blue-500"
                       size={16}
@@ -264,7 +264,7 @@ const MyBooking = () => {
                     {booking.room.location}
                   </p>
 
-                  <div className="flex items-center text-gray-700 mb-2">
+                  <div className="flex items-center text-Text dark:text-white  mb-2">
                     <Calendar className="mr-2 text-blue-500" size={20} />
                     Check-in:{" "}
                     <span className="font-medium ml-1">
@@ -272,7 +272,7 @@ const MyBooking = () => {
                     </span>
                   </div>
 
-                  <div className="flex items-center text-gray-700 mb-4">
+                  <div className="flex items-center text-Text dark:text-white mb-4">
                     <Calendar className="mr-2 text-blue-500" size={20} />
                     Check-out:{" "}
                     <span className="font-medium ml-1">
@@ -280,22 +280,19 @@ const MyBooking = () => {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 text-gray-700 text-sm mb-4">
+                  <div className="grid grid-cols-2 gap-2 text-Text dark:text-white text-sm mb-4">
                     <div>
                       Guests:{" "}
                       <span className="font-semibold">
                         {booking.booked.numberOfGuests}
                       </span>
                     </div>
-                    {/* <div>
-                      Rooms:{" "}
-                      <span className="font-semibold">{booking.rooms}</span>
-                    </div> */}
+                    
                   </div>
 
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 md:gap-4 mb-3 md:mb-6">
-                    <div className="flex items-center text-green-700 text-2xl font-extrabold">
-                      <DollarSign className="mr-1 text-green-600" size={24} />
+                    <div className="flex items-center text-Text dark:text-white text-2xl font-bold">
+                      <DollarSign className="mr-1 text-Text dark:text-white" size={24} />
                       {booking.room.pricePerNight}
                     </div>
 
@@ -303,7 +300,7 @@ const MyBooking = () => {
                       onClick={() => {
                         setUpdateId(booking.booked._id), setOpenModal(true);
                       }}
-                      className="flex items-center text-gray-500 gap-2 cursor-pointer"
+                      className="flex items-center text-Text dark:text-white gap-2 cursor-pointer"
                     >
                       Update Date
                       <DatabaseBackup />
@@ -314,7 +311,7 @@ const MyBooking = () => {
                         setReviewId(booking.room._id);
                         setReviewModal(true);
                       }}
-                      className="flex items-center text-gray-500 gap-2 cursor-pointer"
+                      className="flex items-center text-Text dark:text-white gap-2 cursor-pointer"
                     >
                       Give Review
                       <MdRateReview />

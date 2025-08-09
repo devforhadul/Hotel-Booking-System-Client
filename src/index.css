@@ -33,9 +33,9 @@
 
 /* For taiwind globle color */
 @theme {
-  --color-Text: oklch(0.1961 0.026 322.6); /* #110d1a */
-  --color-Background: oklch(0.9726 0.004 313.8); /* #f8f6fa */
-  --color-Primary: oklch(0.559 0.114 296.8); /* #7f64b0 */
-  --color-Secondary: oklch(0.7614 0.0739 318.64); /* #c6a3d0*/
-  --color-Accent: oklch(0.684 0.105 329.5); /* #bf86c1 */
+  --color-Text: oklch(5.2% 0.015 325);        /* #050315 */
+  --color-Background: oklch(97.8% 0.006 301); /* #fbfbfe */
+  --color-Primary: oklch(56.2% 0.26 252);     /* #2f27ce */
+  --color-Secondary: oklch(91.5% 0.03 282);   /* #dedcff */
+  --color-Accent: oklch(45.3% 0.22 262);      /* #433bff */
 }

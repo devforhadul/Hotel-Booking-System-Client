@@ -5,7 +5,7 @@ import NavBar from "../Components/NavBar";
 
 const MainLayout = () => {
   return (
-    <div className="bg-Background">
+    <div className="bg-Background dark:bg-slate-900">
       <div className="sticky top-0 z-[999] bg-white shadow">
         <NavBar />
       </div>

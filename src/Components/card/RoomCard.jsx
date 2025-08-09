@@ -6,7 +6,7 @@ import { Link } from "react-router";
 const RoomCard = ({ room }) => {
   return (
     <Link to={`/rooms/${room?._id}`}>
-      <div className="rounded-md overflow-hidden shadow-md bg-Secondary/20">
+      <div className="rounded-md overflow-hidden shadow-md dark:shadow-lg bg-Secondary/20 dark:bg-slate-800/50">
         {/* Image */}
         <div className="p-4">
           <img
@@ -37,35 +37,17 @@ const RoomCard = ({ room }) => {
             </span>
           </div>
 
-          <h2 className="text-xl font-bold text-Text">{room?.name}</h2>
+          <h2 className="text-xl font-bold text-Text dark:text-white">{room?.name}</h2>
           <div className="flex justify-between items-center py-3">
-            <p className="text-md text-Text flex items-center ">
+            <p className="text-md text-Text flex items-center gap-1">
               <MapPin className="text-Primary" size={20} />
-              <span> {room?.location}</span>
+              <span className="dark:text-white"> {room?.location}</span>
             </p>
             <p className="font-semibold">${room?.pricePerNight}</p>
           </div>
 
-          {/* <div className="grid grid-cols-3 gap-2 text-center text-sm text-gray-700 border-t border-b py-3">
-            <div>
-              <FaUsers className="mx-auto mb-1" size={20} />
-              <p>Person</p>
-              <p className="font-semibold">{room?.roomCapacity}</p>
-            </div>
-            <div>
-              <Star className="mx-auto mb-1" size={20} />
-              <p>Hotel Type</p>
-              <p className="font-semibold">{room?.hotelType}</p>
-            </div>
-            <div>
-              <FaMoneyBillWave className="mx-auto mb-1" size={20} />
-              <p>PRICE</p>
-              <p className="font-semibold">${room?.pricePerNight}</p>
-            </div>
-          </div> */}
-
           <button className="w-full mt-3 font-semibold bg-Primary text-white py-2 rounded hover:bg-Primary/90 transition cursor-pointer">
-            View Details
+            Details
           </button>
         </div>
       </div>
