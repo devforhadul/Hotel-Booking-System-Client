@@ -76,7 +76,7 @@ const MyBooking = () => {
       isAvailable: true,
     };
 
-    if (checkInDate) {
+    
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -121,9 +121,8 @@ const MyBooking = () => {
             });
         }
       });
-    } else {
-      toast.error("The cancellation period has expired.");
-    }
+    
+    
 
   };
 
@@ -207,7 +206,7 @@ const MyBooking = () => {
   }
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Your Booking Rooms</title>
@@ -233,7 +232,7 @@ const MyBooking = () => {
             {bookedRooms.map((booking) => (
               <div
                 key={booking.room._id}
-                className="grid grid-cols-12  bg-white dark:bg-slate-800/50 rounded-md shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.01] hover:shadow-xl " // Removed fixed width and flex-shrink-0
+                className="grid grid-cols-2 md:grid-cols-12  bg-white dark:bg-slate-800/50 rounded-md shadow-xl transition-shadow dark:shadow-xl overflow-hidden" // Removed fixed width and flex-shrink-0
               >
                 <div className="col-span-4 relative">
                   <img
@@ -319,14 +318,7 @@ const MyBooking = () => {
                   </div>
 
                   <div className="flex space-x-4">
-                    {/* {booking.status === "Pending Payment" && (
-                      <button
-                        onClick={() => handlePay(booking._id)}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
-                      >
-                        <CreditCard className="mr-2" size={20} /> Pay Now
-                      </button>
-                    )} */}
+                    
 
                     <button
                       onClick={() =>
@@ -336,7 +328,7 @@ const MyBooking = () => {
                           booking.booked.checkInDate
                         )
                       }
-                      className={`flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
+                      className={`flex-1 bg-Primary hover:bg-Primary/90 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 flex items-center justify-center cursor-pointer`}
                     >
                       <XCircle className="mr-2" size={20} /> Cancel
                     </button>

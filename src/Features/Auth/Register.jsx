@@ -55,7 +55,7 @@ const Register = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center items-center my-8">
+      <div className="flex justify-center items-center pb-8 pt-5">
         {/* Row */}
         <div className="flex ">
           {/* Col */}
@@ -67,13 +67,13 @@ const Register = () => {
             ></Lottie>
           </div>
           {/* Col */}
-          <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+          <div className="w-full lg:w-7/12  p-5 rounded-lg lg:rounded-l-none">
             <h3 className="pt-4 text-2xl font-bold text-center">
               Create an Account!
             </h3>
             <form
               onSubmit={handleSignup}
-              className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+              className="px-8 pt-6 pb-8 mb-4  rounded"
             >
               <div className="mb-4">
                 <div className="mb-4 md:mr-2 md:mb-0">

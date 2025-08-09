@@ -40,7 +40,7 @@ const Tesimonial = () => {
       <h1 className="text-2xl text-center text-Text dark:text-white font-semibold mb-6">Our Client Reviews</h1>
       <div className=" flex items-center justify-center ">
 
-        <div className="relative w-11/12 mx-auto bg-Secondary/20 dark:bg-slate-800/50 shadow-xl rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center">
+        <div className="relative w-11/12 mx-auto bg-white dark:bg-slate-800/50 shadow-xl hover:shadow-lg rounded-xl p-6 sm:p-8 md:p-10 flex flex-col items-center">
           {/* Testimonial Quote */}
           <blockquote className="text-center text-lg sm:text-xl font-medium text-Text dark:text-white mb-6 leading-relaxed italic">
             "{currentTestimonial?.description}"

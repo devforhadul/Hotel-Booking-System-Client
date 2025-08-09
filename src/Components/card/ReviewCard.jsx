@@ -18,13 +18,13 @@ const ReviewCard = ({ review }) => {
             />
             <div>
               <p className="font-medium">{review?.name || "Anonymous"}</p>
-              <p className="text-sm text-gray-500">{review?.email}</p>
+              <p className="text-sm text-gray-500 text-white">{review?.email}</p>
               <div className="flex items-center gap-1"><Star size={20}></Star>{review?.reviewRating}</div>
             </div>
           </div>
           
         </div>
-        <p className="text-gray-700">
+        <p className="text-gray-700 dark:text-white">
           {review?.description || "No review provided."}
         </p>
       </div>

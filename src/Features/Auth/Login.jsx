@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <section className="flex justify-center  items-center py-8"> 
+    <section className="flex justify-center gap-5  items-center pb-8"> 
       {/* Col */}
       <div className="bg-white/0 lg:block  rounded-l-lg">
         <Lottie
@@ -55,7 +55,7 @@ const Login = () => {
         ></Lottie>
       </div>
 
-      <div className=" bg-white w-full md:max-w-md   md:w-1/2 xl:w-1/3  px-6 lg:px-16 xl:px-12 flex items-center ">
+      <div className=" w-full md:max-w-md   md:w-1/2 xl:w-1/3  px-6 lg:px-16 xl:px-12 flex items-center ">
         <div className="w-full">
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
             Log in to your account

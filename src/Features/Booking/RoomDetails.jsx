@@ -104,9 +104,9 @@ const RoomDetails = () => {
 
   return (
     <div className="w-11/12 mx-auto">
-      <div className="grid grid-cols-12 py-8 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-12 py-8 gap-10">
         {/* Left side */}
-        <div className="col-span-8">
+        <div className="col-span-12 md:col-span-8">
           {/* Images show here... */}
           <div className="grid grid-cols-3 gap-2 rounded-lg overflow-hidden">
             {/* Big image (first item in array) */}
@@ -129,7 +129,7 @@ const RoomDetails = () => {
           </div>
 
           {/* romms details show here.. */}
-          <div className="mt-3">
+          <div className="mt-3 dark:text-white">
             <div className="flex justify-between items-center my-2">
               <p>{data?.location}</p>
               <div className="flex gap-2">
@@ -144,7 +144,7 @@ const RoomDetails = () => {
 
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mt-3 text-center md:text-left">
+            <h1 className="text-2xl font-bold text-Text dark:text-white mt-3">
               {data?.name}
             </h1>
             {/* Rating this room*/}
@@ -161,7 +161,7 @@ const RoomDetails = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)} aria-label="basic tabs example">
                     <Tab label="Room Details" />
-                    <Tab label="Policies" />
+                    {/* <Tab label="Policies" /> */}
                     <Tab label="Reviews" />
                   </Tabs>
                 </Box>
@@ -171,26 +171,26 @@ const RoomDetails = () => {
                   tabValue == 0 && (
                     <div className="my-3">
                       {/* Description */}
-                      <section className="mb-3">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                      <section className="mb-3 ">
+                        <h2 className="text-xl font-semibold text-Text dark:text-white mb-4">
                           Description
                         </h2>
-                        <p className="text-gray-700 leading-relaxed">
+                        <p className="text-Text dark:text-white leading-relaxed">
                           {data?.description}
                         </p>
                       </section>
 
                       {/* Fecilites */}
                       <section className="">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                        <h2 className="text-xl font-semibold text-Text dark:text-white mb-4">
                           Hotel Details
                         </h2>
-                        <div className="mb-3">
+                        <div className="mb-3 ">
                           <p>{data?.hotelType} Hotel</p>
                           <p>Location: {data?.location} </p>
                           <p>Bad type: {data?.bedType}</p>
                         </div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                        <h2 className="text-xl font-semibold text-Text dark:text-white mb-4">
                           Facilities
                         </h2>
                         <div className="">
@@ -200,7 +200,7 @@ const RoomDetails = () => {
                               className="flex items-center space-x-3 text-gray-700"
                             >
                               {/* <span className="text-blue-500">{amenity.icon}</span> */}
-                              <li>{facilitie}</li>
+                              <li className="text-Text dark:text-white">{facilitie}</li>
                             </div>
                           ))}
                         </div>
@@ -208,10 +208,10 @@ const RoomDetails = () => {
                     </div>
                   )
                 }
-                {
+                {/* {
                   tabValue == 1 && <div>Polices here..</div>
-                }
-                {tabValue == 2 && (
+                } */}
+                {tabValue == 1 && (
                   <div className=" rounded-xl overflow-hidden my-3">
                     {/* <h3 className="text-2xl font-bold mb-3">Reviews</h3> */}
                     {data?.reviews?.length > 0 ? (
@@ -233,10 +233,10 @@ const RoomDetails = () => {
         </div>
 
         {/* Right side */}
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           {/* Booking Form */}
           <div className="md:col-span-1">
-            <aside className="bg-gradient-to-br bg-Secondary/20 dark:bg-slate-800/50 p-6 rounded-md text-black">
+            <aside className="bg-gradient-to-br bg-white dark:bg-slate-800/50 p-6 rounded-md text-black dark:text-white">
               <h2 className="text-2xl font-semibold mb-4">
                 ${data?.pricePerNight}{" "}
                 <span className="text-xl font-medium">/ night</span>
@@ -287,15 +287,15 @@ const RoomDetails = () => {
                   </div>
                 </div>
                 {/* Guest */}
-                <div>
-                  <InputLabel id="demo-select-small-label">Guests</InputLabel>
+                <div className="dark:text-white">
+                  <InputLabel className="dark:text-white" id="demo-select-small-label">Guests</InputLabel>
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={guest}
                     label="Age"
                     onChange={(e) => setGuest(e.target.value)}
-                    className="w-full h-10"
+                    className="w-full h-10 dark:text-white"
                   >
                     <MenuItem value="1">
                       <em>Guest</em>
@@ -307,7 +307,7 @@ const RoomDetails = () => {
                   </Select>
                 </div>
                 {/* ========= */}
-                <div>
+                <div className="hidden">
                   <h3 className="text-lg text-Text font-medium">
                     Price Brackdown
                   </h3>

@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* for dark and light theme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* offer modal css*/
 /* Optional if not using Tailwind */
 /* Modal overlay background - full screen, semi-transparent */

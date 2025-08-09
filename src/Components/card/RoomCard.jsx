@@ -6,9 +6,9 @@ import { Link } from "react-router";
 const RoomCard = ({ room }) => {
   return (
     <Link to={`/rooms/${room?._id}`}>
-      <div className="rounded-md overflow-hidden shadow-md dark:shadow-lg bg-Secondary/20 dark:bg-slate-800/50">
+      <div className="rounded-md overflow-hidden shadow-xl dark:shadow-xl transition-shadow bg-white dark:bg-slate-800/50">
         {/* Image */}
-        <div className="p-4">
+        <div className="p-5">
           <img
             src={room?.images[0]} // Replace with your own image
             alt="Room"
@@ -16,7 +16,7 @@ const RoomCard = ({ room }) => {
           />
         </div>
         {/* Rooma details */}
-        <div className="px-4 pb-4">
+        <div className="px-5 pb-5">
           <div className="flex justify-between items-center">
             {/* room avilable badge */}
             <div>
@@ -33,7 +33,7 @@ const RoomCard = ({ room }) => {
               )}
             </div>
             <span>
-              <Star size={15} className="" />
+              {/* <Star size={15} className="" /> */}
             </span>
           </div>
 
@@ -43,7 +43,7 @@ const RoomCard = ({ room }) => {
               <MapPin className="text-Primary" size={20} />
               <span className="dark:text-white"> {room?.location}</span>
             </p>
-            <p className="font-semibold">${room?.pricePerNight}</p>
+            <p className="font-semibold text-Text dark:text-white">${room?.pricePerNight}</p>
           </div>
 
           <button className="w-full mt-3 font-semibold bg-Primary text-white py-2 rounded hover:bg-Primary/90 transition cursor-pointer">

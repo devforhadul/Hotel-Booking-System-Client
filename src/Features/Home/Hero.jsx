@@ -54,7 +54,7 @@ const Hero = () => {
               Experience luxury, comfort, and convenience in one place.
             </p>
             <Link to={"/rooms"}>
-              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+              <button className="bg-Primary text-white px-6 py-2 rounded-full hover:bg-Primary/90 transition">
                 Book Now
               </button>
             </Link>
@@ -72,7 +72,7 @@ const Hero = () => {
               Experience luxury, comfort, and convenience in one place.
             </p>
             <Link to={"/rooms"}>
-              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition">
+              <button className="bg-Primary text-white px-6 py-2 rounded-full hover:bg-Primary/90 transition">
                 Book Now
               </button>
             </Link>

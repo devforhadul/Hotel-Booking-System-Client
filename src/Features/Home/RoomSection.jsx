@@ -24,7 +24,7 @@ const RoomSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {rooms.map((room, idx) => (
           <Link key={idx} to={`/rooms/${room?._id}`}>
-            <div className="rounded-md overflow-hidden shadow-md bg-Secondary/20 dark:bg-slate-800/50">
+            <div className="rounded-md overflow-hidden shadow-lg hover:shadow-lg transition-shadow bg-white dark:bg-slate-800/50">
               {/* Image */}
               <div className="p-4">
                 <img
@@ -51,7 +51,7 @@ const RoomSection = () => {
                     )}
                   </div>
                   <span>
-                    <Star size={15} className="" />
+                    {/* <Star size={15} className="" /> */}
                   </span>
                 </div>
 
@@ -61,7 +61,7 @@ const RoomSection = () => {
                     <MapPin className="text-Primary" size={20} />
                     <span> {room?.location}</span>
                   </p>
-                  <p className="font-semibold">${room?.pricePerNight}</p>
+                  <p className="font-semibold dark:text-white">${room?.pricePerNight}</p>
                 </div>
 
                 <button className="w-full mt-3 font-semibold bg-Primary text-white py-2 rounded hover:bg-Primary/90 transition cursor-pointer">
