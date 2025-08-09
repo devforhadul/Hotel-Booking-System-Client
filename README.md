@@ -1,28 +1,60 @@
-# Modern Hotel Booking
+# 🏨 Hotel Booking Web Application
 
-A modern, full-stack hotel booking application built using the MERN stack (MongoDB, Express, React, Node.js). This app allows users to browse hotel rooms, filter by price, book rooms, and manage their bookings with secure authentication.
-
----
-
-## Features
-
-- User registration and login with JWT authentication
-- Browse all available hotel rooms with detailed information
-- Filter rooms by price range
-- Book and cancel room bookings
-- View user-specific bookings
-- Admin functionalities (manage rooms and bookings)
-- Responsive and modern UI with Tailwind CSS and DaisyUI
-- Secure private routes using JWT
+A full-stack **Hotel Booking** web application where users can register, browse hotels, filter by price, and make bookings.  
+The app includes an admin dashboard for managing rooms and bookings.  
+Built with **React, Node.js, Express, MongoDB, and JWT authentication**.
 
 ---
 
-## Technologies Used
-
-- **Frontend:** React, React Router, Tailwind CSS, DaisyUI
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **Authentication:** JWT (JSON Web Tokens), Firebase auth
+## 📸 Screenshot
+![Hotel Booking App Screenshot](./screenshot.png)  
+*(Replace with your actual screenshot)*
 
 ---
 
+## 🚀 Live Demo
+- **Frontend Live URL:** [Your Live Frontend Link](https://example.com)
+- **Backend API URL:** [Your Live Backend Link](https://api.example.com)
+
+---
+
+## 🛠 Technologies Used
+
+### **Frontend**
+- React
+- React Router
+- Tailwind CSS
+- DaisyUI
+
+### **Backend**
+- Node.js
+- Express.js
+- MongoDB
+
+### **Authentication**
+- JWT (JSON Web Tokens)
+- Firebase Authentication
+
+---
+
+## 🌟 Features
+- **User Registration & Login** with JWT authentication
+- **Browse All Available Hotels** with detailed room information
+- **Filter by Price Range**
+- **Book & Cancel Bookings**
+- **View User-Specific Bookings**
+- **Admin Panel** to manage rooms and bookings
+- **Responsive & Modern UI** (Tailwind CSS + DaisyUI)
+- **Secure Private Routes** with JWT protection
+
+---
+
+## 📦 Dependencies
+
+### **Frontend**
+```bash
+"axios": "^x.x.x",
+"react": "^x.x.x",
+"react-router-dom": "^x.x.x",
+"tailwindcss": "^x.x.x",
+"daisyui": "^x.x.x"
