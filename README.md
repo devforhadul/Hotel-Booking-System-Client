@@ -4,17 +4,17 @@ A full-stack **Hotel Booking** web application where users can register, browse 
 The app includes an admin dashboard for managing rooms and bookings.  
 Built with **React, Node.js, Express, MongoDB, and JWT authentication**.
 
----
 
-## 📸 Screenshot
-![Hotel Booking App Screenshot](./screenshot.png)  
-*(Replace with your actual screenshot)*
+
+<!-- ## 📸 Screenshot -->
+<!-- ![Hotel Booking App Screenshot](./screenshot.png) -->
+
 
 ---
 
 ## 🚀 Live Demo
-- **Frontend Live URL:** [Your Live Frontend Link](https://example.com)
-- **Backend API URL:** [Your Live Backend Link](https://api.example.com)
+- **Frontend Live URL:** [Your Live Frontend Link](https://modern-hotel-booking-63402.web.app/)
+- **Backend Github Repo:** [Your Live Backend Link](https://github.com/devforhadul/Hotel-Booking-System-Server)
 
 ---
 
@@ -53,8 +53,11 @@ Built with **React, Node.js, Express, MongoDB, and JWT authentication**.
 
 ### **Frontend**
 ```bash
-"axios": "^x.x.x",
-"react": "^x.x.x",
-"react-router-dom": "^x.x.x",
-"tailwindcss": "^x.x.x",
-"daisyui": "^x.x.x"
+"react": "^19.1.1"
+"react-dom": "^19.1.1"
+"react-router-dom": "^7.8.0"
+"tailwindcss": "^4.1.11"
+"daisyui": "^5.0.50"
+"express": "^5.1.0"
+"mongodb": "^6.18.0"
+"jsonwebtoken": "^9.0.2"
