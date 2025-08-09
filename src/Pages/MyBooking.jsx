@@ -217,7 +217,7 @@ const MyBooking = () => {
         />
       </Helmet>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-semibold text-Text dark:text-white mb-10 text-center drop-shadow-lg">
+        <h1 className="text-2xl font-semibold text-Text dark:text-white mb-10 text-center ">
           {/* <Hotel className="inline-block mr-3 text-blue-600" size={48} /> */}
           My Bookings
         </h1>

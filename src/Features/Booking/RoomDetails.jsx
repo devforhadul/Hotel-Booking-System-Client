@@ -9,6 +9,7 @@ import {
   Heart,
   Share2,
   Snowflake,
+  Star,
   Tv,
   User,
   Utensils,
@@ -22,102 +23,82 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import ReviewCard from "../../Components/card/ReviewCard";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { useForm } from "react-hook-form";
 
 // Main App component
 const RoomDetails = () => {
   const { data } = useLoaderData();
   const { user } = use(AuthContext);
-
-  const [tabValue, setTabValue] = useState(0);
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
-  const [numberOfGuests, setNumberOfGuests] = useState(1);
-  const [message, setMessage] = useState("");
-  const [confirmBookModal, setConfirmBookModal] = useState(false);
   const navigate = useNavigate();
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+  } = useForm();
+  const [tabValue, setTabValue] = useState(0);
+  const [guest, setGuest] = useState(1)
+  const [summaryModal, setSummaryModal] = useState(false);
+  const [bookingData, setBookingData] = useState({});
 
-
-  // Handle booking submission
-  const handleBooking = (e) => {
-    e.preventDefault();
-    if (!user) {
-      toast.error("Please login to book a room.");
-      return navigate("/login");
-    }
-
-    if (!data?.isAvailable) {
-      return toast.error("Not Available this room Right now!!");
-    }
-
-    if (!checkInDate || !checkOutDate || numberOfGuests <= 0) {
-      setMessage("Please fill in all booking details.");
-      return;
-    }
-    if (new Date(checkInDate) >= new Date(checkOutDate)) {
-      setMessage("Check-out date must be after check-in date.");
-      return;
-    }
-    if (numberOfGuests > room.maxGuests) {
-      setMessage(
-        `This room can accommodate a maximum of ${room.maxGuests} guests.`
-      );
-      return;
-    }
-
-    confirmBookModal(true);
-  };
 
   // Handle booking confirmation
-  const handleConfirmBooking = () => {
-    const bookingData = {
+  const handleConfirmBooking = async () => {
+    const bookingDatas = {
       roomId: data?._id,
-      checkInDate: checkInDate,
-      checkOutDate: checkOutDate,
-      numberOfGuests: numberOfGuests,
+      checkInDate: bookingData?.checkInDate,
+      checkOutDate: bookingData?.checkOutDate,
+      numberOfGuests: guest,
       userName: user?.displayName,
       userEmail: user?.email,
       userPhoto: user?.photoURL,
+      isAvailable: false
+
     };
 
-    const availability = {
-      isAvailable: false,
-    };
 
-    axios
-      .post(
-        "https://modern-hotel-booking-server-nine.vercel.app/rooms",
-        bookingData
-      )
-      .then((response) => {
-        //console.log("Booking successful:", response.data);
+    // Validate user login
+    if (!user) {
+      toast.error("You must be logged in to book a room.");
+      navigate("/login");
+      return;
+    }
+
+    // Validate room availability
+    if (!data?.isAvailable) {
+      toast.error("This room is currently unavailable.");
+      return;
+    }
+
+    // Validate booking details
+    const { checkInDate, checkOutDate } = bookingData || {};
+    if (new Date(checkInDate) >= new Date(checkOutDate)) {
+      setSummaryModal(false)
+      toast.error("Check-out date must be later than check-in date.");
+      return;
+    }
+
+
+
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/rooms`, bookingDatas
+      );
+      if (data?.insertedId) {
         toast.success("Booking confirmed successfully!");
         navigate("/my-booking");
-        // after confirming booking avaiolability false for not available room
-        axios
-          .patch(
-            `https://modern-hotel-booking-server-nine.vercel.app/rooms/booked/${data?._id}`,
-            availability
-          )
-          .then((res) => {
-            //console.log("Room availability updated:", res.data);
-          })
-          .catch((error) => {
-            console.error("Error updating room availability:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Error booking room:", error);
-        setMessage("Failed to confirm booking. Please try again later.");
-      });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
 
-    // Clear form
-    setCheckInDate("");
-    setCheckOutDate("");
-    setNumberOfGuests(1);
+    reset();
+    setSummaryModal(false);
+
   };
-
-
 
 
 
@@ -127,39 +108,55 @@ const RoomDetails = () => {
         {/* Left side */}
         <div className="col-span-8">
           {/* Images show here... */}
-          <img
-            src={data?.images[0]}
-            alt=""
-            className="w-full h-96 object-cover rounded-lg"
-          />
+          <div className="grid grid-cols-3 gap-2 rounded-lg overflow-hidden">
+            {/* Big image (first item in array) */}
+            <div className="col-span-2 row-span-2">
+              <img
+                src={data?.images[0]}
+                alt="Main"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Remaining images */}
+            {data?.images.slice(1).map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Image ${index + 2}`}
+                className="w-full h-full object-cover"
+              />
+            ))}
+          </div>
+
           {/* romms details show here.. */}
           <div className="mt-3">
-            <div className="flex justify-between items-center">
-              <p>Location</p>
+            <div className="flex justify-between items-center my-2">
+              <p>{data?.location}</p>
               <div className="flex gap-2">
-                <div className="flex items-center">
-                  <Share2 size={17}/>
+                <div className="flex items-center gap-1">
+                  <Share2 size={17} className="text-Accent" />
                   <p className="text-md font-medium">Share</p>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
+                  <Heart size={17} className="text-Accent" />
                   <p className="text-md font-medium">Save</p>
-                  <Heart size={17}/>
                 </div>
 
               </div>
             </div>
-            <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center md:text-left">
+            <h1 className="text-2xl font-bold text-gray-900 mt-3 text-center md:text-left">
               {data?.name}
             </h1>
             {/* Rating this room*/}
-            <div className="mb-4">
-              <p className="px-4 py-1.5 rounded-md border bg-[#ecf3fe] border-[#4073bf] inline-block">
-                {data?.reviewRating}/5.0
+            <div className=" flex items-center gap-1 mt-2">
+              <span> <Star size={18} className="text-Primary" /></span>
+              <p className=" rounded-md  inline-block">
+                {data?.reviewRating}/5.0 (44+ Reviews)
               </p>
             </div>
             {/* Tab */}
 
-            <div>
+            <div className="mt-2">
               <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)} aria-label="basic tabs example">
@@ -234,6 +231,7 @@ const RoomDetails = () => {
           </div>
 
         </div>
+
         {/* Right side */}
         <div className="col-span-4">
           {/* Booking Form */}
@@ -243,7 +241,7 @@ const RoomDetails = () => {
                 ${data?.pricePerNight}{" "}
                 <span className="text-xl font-medium">/ night</span>
               </h2>
-              <form onSubmit={handleBooking} className="space-y-4">
+              <form onSubmit={handleSubmit((data) => setBookingData(data))} className="space-y-4">
                 <div className="flex items-center justify-between gap-1">
                   {/* Checked in */}
                   <div>
@@ -257,11 +255,12 @@ const RoomDetails = () => {
                     <input
                       type="date"
                       id="check-in"
-                      value={checkInDate}
-                      onChange={(e) => setCheckInDate(e.target.value)}
+                      //value={checkInDate}
+                      //onChange={(e) => setCheckInDate(e.target.value)}
                       min={new Date().toISOString().split("T")[0]} // Prevent selecting past dates
                       className="w-full p-2 rounded-full bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
                       required
+                      {...register('checkInDate', { required: true })}
                     />
                   </div>
                   {/* Checked out */}
@@ -276,39 +275,38 @@ const RoomDetails = () => {
                     <input
                       type="date"
                       id="check-out"
-                      value={checkOutDate}
-                      onChange={(e) => setCheckOutDate(e.target.value)}
+                      //value={checkOutDate}
+                      //onChange={(e) => setCheckOutDate(e.target.value)}
                       min={
-                        checkInDate || new Date().toISOString().split("T")[0]
+                        bookingData?.checkInDate || new Date().toISOString().split("T")[0]
                       } // Check-out cannot be before check-in
                       className="w-full p-2 rounded-full bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
                       required
+                      {...register('checkOutDate', { required: true })}
                     />
                   </div>
                 </div>
+                {/* Guest */}
                 <div>
-                  <label
-                    htmlFor="guests"
-                    className="block text-sm font-medium mb-2"
+                  <InputLabel id="demo-select-small-label">Guests</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={guest}
+                    label="Age"
+                    onChange={(e) => setGuest(e.target.value)}
+                    className="w-full h-10"
                   >
-                    <User size={16} className="inline-block mr-2" /> Number of
-                    Guests
-                  </label>
-                  <input
-                    type="number"
-                    id="guests"
-                    value={numberOfGuests}
-                    onChange={(e) =>
-                      setNumberOfGuests(
-                        Math.max(1, parseInt(e.target.value) || 1)
-                      )
-                    }
-                    min="1"
-                    max={data?.roomCapacity || 1}
-                    className="w-full p-2 rounded-full bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors duration-200"
-                    required
-                  />
+                    <MenuItem value="1">
+                      <em>Guest</em>
+                    </MenuItem>
+                    <MenuItem value={1}>1 Adult</MenuItem>
+                    <MenuItem value={2}>2 Adult</MenuItem>
+                    <MenuItem value={3}>3 Adult</MenuItem>
+                    <MenuItem value={4}>4 Adult</MenuItem>
+                  </Select>
                 </div>
+                {/* ========= */}
                 <div>
                   <h3 className="text-lg text-Text font-medium">
                     Price Brackdown
@@ -316,15 +314,24 @@ const RoomDetails = () => {
                 </div>
                 <button
                   type="submit"
-                  onClick={() => setConfirmBookModal(true)}
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                  onClick={() => {
+                    if (!data?.isAvailable) {
+                      toast.error("This room is currently unavailable.");
+                      return;
+                    }
+                    if (bookingData?.checkInDate || bookingData?.checkOutDate) {
+                      setSummaryModal(true)
+                    }
+
+                  }}
+                  className="w-full bg-Primary  text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform cursor-pointer"
                 >
                   Book Now
                 </button>
               </form>
 
               {/* modal */}
-              {confirmBookModal && <BookingSummaryModal data={data} user={user} setOpenModal={setConfirmBookModal} handleConfirmBooking={handleConfirmBooking} />}
+              {summaryModal && <BookingSummaryModal data={data} user={user} setSummaryModal={setSummaryModal} handleConfirmBooking={handleConfirmBooking} bookingData={bookingData} guest={guest} />}
             </aside>
           </div>
         </div>

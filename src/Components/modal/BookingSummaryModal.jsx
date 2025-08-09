@@ -1,57 +1,53 @@
-import { CircleX } from "lucide-react";
+import { CircleX, SquareX } from "lucide-react";
 import React from "react";
 
-export default function BookingSummaryModal({data, user, setOpenModal, handleConfirmBooking}) {
-  console.log(data);
+export default function BookingSummaryModal({ data, setSummaryModal, handleConfirmBooking, bookingData, guest }) {
+
   return (
     <dialog id="my_modal_1" className="modal modal-open">
       <div className="modal-box text-black">
-        {" "}
-        {/* text-black যুক্ত করা হলো */}
         <div>
-          <h3 className="font-bold text-xl mb-4 text-center">
-            Booking Summary
-          </h3>
-          <ul className="text-sm space-y-2 hidden">
+          <div className="flex justify-between">
+            <h3 className="font-bold text-xl mb-4 text-center">
+              Booking Summary
+            </h3>
+            <div>
+              <form method="dialog">
+                <span className="cursor-pointer" onClick={() => setSummaryModal(false)}><SquareX /></span>
+
+              </form>
+            </div>
+          </div>
+          <ul className="text-sm space-y-2">
             <li>
-              <strong>Room:</strong> {data?.name}
+              <strong>Hotel name:</strong> {data?.name}
             </li>
             <li>
-              <strong>Name:</strong> {user?.displayName}
+              <strong>Check-in:</strong> {bookingData?.checkInDate}
             </li>
             <li>
-              <strong>Email:</strong> {user?.email}
-            </li>
-            {/* <li>
-              <strong>Guests:</strong> {numberOfGuests}
+              <strong>Check-out:</strong> {bookingData?.checkOutDate}
             </li>
             <li>
-              <strong>Check-in:</strong> {checkInDate}
+              <strong>Guests:</strong> {guest}
             </li>
-            <li>
-              <strong>Check-out:</strong> {checkOutDate}
-            </li> */}
             <li>
               <strong>Price/night:</strong> ${data?.pricePerNight}
             </li>
             {/* <li>
-                          <strong>Total:</strong> ${bookingSummary.totalCost}
-                        </li> */}
+              <strong>Total:</strong> $500
+            </li> */}
           </ul>
+          {/* Confirm button */}
           <button
             onClick={handleConfirmBooking}
-            className="w-full mt-4 cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            className="w-full mt-4 cursor-pointer bg-Primary  text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform"
           >
             Confirm Booking
           </button>
         </div>
-        <div className="modal-action">
-          <form method="dialog">
-            <button onClick={() => setOpenModal(false)} className="btn">
-              <CircleX />
-            </button>
-          </form>
-        </div>
+
+
       </div>
     </dialog>
   );
