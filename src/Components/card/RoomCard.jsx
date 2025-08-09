@@ -4,6 +4,7 @@ import { FaUsers, FaRulerCombined, FaMoneyBillWave } from "react-icons/fa";
 import { Link } from "react-router";
 
 const RoomCard = ({ room }) => {
+  
   return (
     <Link to={`/rooms/${room?._id}`}>
       <div className="rounded-md overflow-hidden shadow-xl dark:shadow-xl transition-shadow bg-white dark:bg-slate-800/50">

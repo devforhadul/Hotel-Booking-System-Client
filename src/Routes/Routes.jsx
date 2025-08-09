@@ -11,6 +11,9 @@ import RoomDetails from "../Features/Booking/RoomDetails";
 import NotFound from "../Pages/NotFound";
 import PrivateRoute from "./PrivateRoute";
 import Contact from "../Pages/Contact";
+import Blog from "../Pages/blog/Blog";
+import BlogDetails from "../Pages/blog/BlogDetails";
+
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,14 @@ const router = createBrowserRouter([
           axios.get(
             "https://modern-hotel-booking-server-nine.vercel.app/rooms"
           ),
+      },
+      {
+        path: '/blog',
+        element: <Blog />
+      },
+      {
+        path: '/blog/:id',
+        element: <BlogDetails/>
       },
       {
         path: "login",

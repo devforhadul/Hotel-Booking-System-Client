@@ -76,14 +76,26 @@ const NavBar = () => {
           Rooms
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to="/my-booking"
+            className={({ isActive }) =>
+              isActive ? "text-blue-500 font-bold" : "text-gray-700 dark:text-white"
+            }
+          >
+            My Booking
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink
-          to="/my-booking"
+          to="/blog"
           className={({ isActive }) =>
             isActive ? "text-blue-500 font-bold" : "text-gray-700 dark:text-white"
           }
         >
-          My Booking
+          Blog
         </NavLink>
       </li>
       <li>
@@ -108,9 +120,9 @@ const NavBar = () => {
             {/* logo */}
             <div>
               <Link to={'/'}>
-              <h2 className="text-xl mg:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                TripHaven
-              </h2>
+                <h2 className="text-xl mg:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  TripHaven
+                </h2>
               </Link>
             </div>
             {/* menu */}
@@ -198,7 +210,7 @@ const NavBar = () => {
                     </nav>
 
                     {/* Footer Icons + Button */}
-                    
+
                   </div>
                 )}
               </div>

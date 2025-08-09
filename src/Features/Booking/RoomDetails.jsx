@@ -44,6 +44,7 @@ const RoomDetails = () => {
   const [summaryModal, setSummaryModal] = useState(false);
   const [bookingData, setBookingData] = useState({});
 
+  console.log(data);
 
   // Handle booking confirmation
   const handleConfirmBooking = async () => {
@@ -151,7 +152,7 @@ const RoomDetails = () => {
             <div className=" flex items-center gap-1 mt-2">
               <span> <Star size={18} className="text-Primary" /></span>
               <p className=" rounded-md  inline-block">
-                {data?.reviewRating}/5.0 (44+ Reviews)
+                {data?.reviewRating}/5.0
               </p>
             </div>
             {/* Tab */}
