@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+
 import { useLoaderData, useNavigation } from "react-router";
 import { Helmet } from "react-helmet";
 import RoomCard from "../Components/card/RoomCard";
-import axios from "axios";
+
 
 const Rooms = () => {
   const rooms = useLoaderData();
